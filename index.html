@@ -727,10 +727,13 @@ canvas.hw-canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crossha
   <div id="homeScreen" class="screen active">
     <div class="banner">
       <h2>Hello, Little Star! 👋</h2>
-      <p>Class K-2 | Aaj kya seekhna hai?</p>
+      <p>Apni class chuniye — phir seekhein!</p>
       <div class="banner-stars">⭐ 🌟 ✨ 💫</div>
       <div class="mascot">🦁</div>
     </div>
+    <!-- Class Selector Tabs -->
+    <div id="classTabsRow" style="display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;"></div>
+    <!-- Subject Grid changes based on selected class -->
     <div id="catGrid"></div>
   </div>
 
@@ -1183,122 +1186,301 @@ simple_maths:{title:"Simple Maths",icon:"&#10133;",color:"c2",hint:"Jod aur Ghat
   {char:"5-2",emoji:"&#53;&#45;&#50;",name:"5 - 2 = 3",hindi:"पाँच में से दो तीन",speak:"Five minus two equals three",answer:3},
   {char:"8-3",emoji:"&#56;&#45;&#51;",name:"8 - 3 = 5",hindi:"आठ में से तीन पाँच",speak:"Eight minus three equals five",answer:5},
   {char:"10-4",emoji:"&#49;&#48;&#45;&#52;",name:"10 - 4 = 6",hindi:"दस में से चार छह",speak:"Ten minus four equals six",answer:6},
-  {char:"9-2",emoji:"&#57;&#45;&#50;",name:"9 - 2 = 7",hindi:"नौ में से दो सात",speak:"Nine minus two equals seven",answer:7},
-  {char:"10-5",emoji:"&#49;&#48;&#45;&#53;",name:"10 - 5 = 5",hindi:"दस में से पाँच पाँच",speak:"Ten minus five equals five",answer:5}
+  {char:"9-2",emoji:"&#57;&#45;&#50;",name:"9 - 2 = 7",hindi:"नौ में से दो सात",speak:"Nine minus two equals seven",answer:7}
 ]},
 
-// ══════ ENGLISH SUBJECT ══════════════════════════════════════════════
-small_abc:{title:"Small Letters a-z",icon:"&#97;",color:"c1",hint:"Lowercase letters",type:"items",items:[
-  {char:"a",emoji:"&#127822;",name:"apple",hindi:"सेब",speak:"Seb"},{char:"b",emoji:"&#129731;",name:"ball",hindi:"गेंद",speak:"Gend"},
-  {char:"c",emoji:"&#128049;",name:"cat",hindi:"बिल्ली",speak:"Billi"},{char:"d",emoji:"&#128021;",name:"dog",hindi:"कुत्ता",speak:"Kutta"},
-  {char:"e",emoji:"&#128024;",name:"elephant",hindi:"हाथी",speak:"Haathi"},{char:"f",emoji:"&#128031;",name:"fish",hindi:"मछली",speak:"Machhli"},
-  {char:"g",emoji:"&#128016;",name:"goat",hindi:"बकरी",speak:"Bakri"},{char:"h",emoji:"&#128052;",name:"horse",hindi:"घोड़ा",speak:"Ghoda"},
-  {char:"i",emoji:"&#127846;",name:"ice cream",hindi:"आइस क्रीम",speak:"Ice cream"},{char:"j",emoji:"&#128057;",name:"jaguar",hindi:"जैगुआर",speak:"Jaguar"},
-  {char:"k",emoji:"&#129413;",name:"kite",hindi:"पतंग",speak:"Patang"},{char:"l",emoji:"&#129409;",name:"lion",hindi:"शेर",speak:"Sher"},
-  {char:"m",emoji:"&#128018;",name:"monkey",hindi:"बंदर",speak:"Bandar"},{char:"n",emoji:"&#127981;",name:"nest",hindi:"घोंसला",speak:"Ghonsla"},
-  {char:"o",emoji:"&#128025;",name:"octopus",hindi:"ऑक्टोपस",speak:"Octopus"},{char:"p",emoji:"&#129438;",name:"peacock",hindi:"मोर",speak:"Mor"},
-  {char:"q",emoji:"&#128120;",name:"queen",hindi:"रानी",speak:"Raani"},{char:"r",emoji:"&#127752;",name:"rainbow",hindi:"इंद्रधनुष",speak:"Indradhanush"},
-  {char:"s",emoji:"&#128013;",name:"snake",hindi:"साँप",speak:"Saanp"},{char:"t",emoji:"&#128047;",name:"tiger",hindi:"बाघ",speak:"Bagh"},
-  {char:"u",emoji:"&#9730;",name:"umbrella",hindi:"छतरी",speak:"Chhatri"},{char:"v",emoji:"&#127931;",name:"violin",hindi:"वायलिन",speak:"Violin"},
-  {char:"w",emoji:"&#128051;",name:"whale",hindi:"व्हेल",speak:"Whale"},{char:"x",emoji:"&#127928;",name:"xylophone",hindi:"जाइलोफोन",speak:"Xylophone"},
-  {char:"y",emoji:"&#129360;",name:"yak",hindi:"याक",speak:"Yak"},{char:"z",emoji:"&#129427;",name:"zebra",hindi:"ज़ेब्रा",speak:"Zebra"}
+phonics:{title:"Phonics",icon:"&#127925;",color:"c1",hint:"Letter sounds",type:"items",items:[
+  {char:"A",emoji:"&#127822;",name:"Aah - Apple",hindi:"अ ध्वनि",speak:"A says Aah, like in Apple"},
+  {char:"B",emoji:"&#129731;",name:"Buh - Ball",hindi:"ब ध्वनि",speak:"B says Buh, like in Ball"},
+  {char:"C",emoji:"&#128049;",name:"Kuh - Cat",hindi:"क ध्वनि",speak:"C says Kuh, like in Cat"},
+  {char:"D",emoji:"&#128021;",name:"Duh - Dog",hindi:"ड ध्वनि",speak:"D says Duh, like in Dog"},
+  {char:"E",emoji:"&#128024;",name:"Eh - Elephant",hindi:"ए ध्वनि",speak:"E says Eh, like in Elephant"},
+  {char:"F",emoji:"&#128031;",name:"Fuh - Fish",hindi:"फ ध्वनि",speak:"F says Fuh, like in Fish"},
+  {char:"G",emoji:"&#128016;",name:"Guh - Goat",hindi:"ग ध्वनि",speak:"G says Guh, like in Goat"},
+  {char:"H",emoji:"&#128052;",name:"Huh - Horse",hindi:"ह ध्वनि",speak:"H says Huh, like in Horse"},
+  {char:"I",emoji:"&#127846;",name:"Ih - Ink",hindi:"इ ध्वनि",speak:"I says Ih, like in Ink"},
+  {char:"J",emoji:"&#127994;",name:"Juh - Jam",hindi:"ज ध्वनि",speak:"J says Juh, like in Jam"},
+  {char:"K",emoji:"&#129413;",name:"Kuh - Kite",hindi:"क ध्वनि",speak:"K says Kuh, like in Kite"},
+  {char:"L",emoji:"&#129409;",name:"Luh - Lion",hindi:"ल ध्वनि",speak:"L says Luh, like in Lion"},
+  {char:"M",emoji:"&#128018;",name:"Muh - Monkey",hindi:"म ध्वनि",speak:"M says Muh, like in Monkey"},
+  {char:"N",emoji:"&#127981;",name:"Nuh - Nest",hindi:"न ध्वनि",speak:"N says Nuh, like in Nest"},
+  {char:"O",emoji:"&#128025;",name:"Oh - Octopus",hindi:"ओ ध्वनि",speak:"O says Oh, like in Octopus"},
+  {char:"P",emoji:"&#129438;",name:"Puh - Peacock",hindi:"प ध्वनि",speak:"P says Puh, like in Peacock"},
+  {char:"R",emoji:"&#127752;",name:"Ruh - Rainbow",hindi:"र ध्वनि",speak:"R says Ruh, like in Rainbow"},
+  {char:"S",emoji:"&#128013;",name:"Sss - Snake",hindi:"स ध्वनि",speak:"S says Sss, like in Snake"},
+  {char:"T",emoji:"&#128047;",name:"Tuh - Tiger",hindi:"त ध्वनि",speak:"T says Tuh, like in Tiger"},
+  {char:"W",emoji:"&#127754;",name:"Wuh - Water",hindi:"व ध्वनि",speak:"W says Wuh, like in Water"}
 ]},
-two_letter_words:{title:"2-Letter Words",icon:"&#128216;",color:"c1",hint:"Simple words",type:"items",items:[
-  {char:"am",emoji:"&#128104;",name:"am",hindi:"हूँ",speak:"am"},{char:"is",emoji:"&#128105;",name:"is",hindi:"है",speak:"is"},
-  {char:"at",emoji:"&#127968;",name:"at",hindi:"पर",speak:"at"},{char:"an",emoji:"&#128100;",name:"an",hindi:"एक",speak:"an"},
-  {char:"on",emoji:"&#128218;",name:"on",hindi:"पर",speak:"on"},{char:"in",emoji:"&#128194;",name:"in",hindi:"में",speak:"in"},
-  {char:"up",emoji:"&#11014;",name:"up",hindi:"ऊपर",speak:"up"},{char:"go",emoji:"&#128099;",name:"go",hindi:"जाओ",speak:"go"},
-  {char:"no",emoji:"&#128683;",name:"no",hindi:"नहीं",speak:"no"},{char:"do",emoji:"&#9989;",name:"do",hindi:"करो",speak:"do"},
-  {char:"we",emoji:"&#128106;",name:"we",hindi:"हम",speak:"we"},{char:"me",emoji:"&#128104;",name:"me",hindi:"मैं",speak:"me"}
+picture_words:{title:"Picture Words",icon:"&#128444;",color:"c1",hint:"Picture dekho naam bolo",type:"items",items:[
+  {char:"Sun",emoji:"&#9728;",name:"Sun",hindi:"सूरज",speak:"Sun - Suraj"},{char:"Moon",emoji:"&#127769;",name:"Moon",hindi:"चाँद",speak:"Moon - Chaand"},
+  {char:"Tree",emoji:"&#127795;",name:"Tree",hindi:"पेड़",speak:"Tree - Ped"},{char:"House",emoji:"&#127968;",name:"House",hindi:"घर",speak:"House - Ghar"},
+  {char:"Car",emoji:"&#128663;",name:"Car",hindi:"कार",speak:"Car"},{char:"Book",emoji:"&#128218;",name:"Book",hindi:"किताब",speak:"Book - Kitaab"},
+  {char:"Cup",emoji:"&#9749;",name:"Cup",hindi:"कप",speak:"Cup"},{char:"Bed",emoji:"&#128716;",name:"Bed",hindi:"बिस्तर",speak:"Bed - Bistar"},
+  {char:"Door",emoji:"&#128682;",name:"Door",hindi:"दरवाज़ा",speak:"Door - Darwaza"},{char:"Chair",emoji:"&#129681;",name:"Chair",hindi:"कुर्सी",speak:"Chair - Kursi"},
+  {char:"Star",emoji:"&#11088;",name:"Star",hindi:"तारा",speak:"Star - Tara"},{char:"Ball",emoji:"&#9917;",name:"Ball",hindi:"गेंद",speak:"Ball - Gend"}
 ]},
-three_letter_words:{title:"3-Letter Words",icon:"&#128217;",color:"c1",hint:"CVC words",type:"items",items:[
-  {char:"cat",emoji:"&#128049;",name:"cat",hindi:"बिल्ली",speak:"cat"},{char:"dog",emoji:"&#128021;",name:"dog",hindi:"कुत्ता",speak:"dog"},
-  {char:"hat",emoji:"&#127913;",name:"hat",hindi:"टोपी",speak:"hat"},{char:"bat",emoji:"&#129415;",name:"bat",hindi:"बल्ला",speak:"bat"},
-  {char:"mat",emoji:"&#129518;",name:"mat",hindi:"चटाई",speak:"mat"},{char:"rat",emoji:"&#128001;",name:"rat",hindi:"चूहा",speak:"rat"},
-  {char:"hen",emoji:"&#128020;",name:"hen",hindi:"मुर्गी",speak:"hen"},{char:"pen",emoji:"&#128394;",name:"pen",hindi:"कलम",speak:"pen"},
-  {char:"ten",emoji:"&#128287;",name:"ten",hindi:"दस",speak:"ten"},{char:"cup",emoji:"&#9749;",name:"cup",hindi:"कप",speak:"cup"},
-  {char:"sun",emoji:"&#9728;",name:"sun",hindi:"सूरज",speak:"sun"},{char:"bus",emoji:"&#128652;",name:"bus",hindi:"बस",speak:"bus"},
-  {char:"bed",emoji:"&#128716;",name:"bed",hindi:"बिस्तर",speak:"bed"},{char:"red",emoji:"&#128308;",name:"red",hindi:"लाल",speak:"red"},
-  {char:"top",emoji:"&#129529;",name:"top",hindi:"टॉप",speak:"top"},{char:"pot",emoji:"&#127859;",name:"pot",hindi:"बर्तन",speak:"pot"}
+vowel_words:{title:"Vowel Words",icon:"&#128290;",color:"c1",hint:"a e i o u words",type:"items",items:[
+  {char:"Ant",emoji:"&#128028;",name:"ant",hindi:"चींटी",speak:"A - ant"},{char:"Egg",emoji:"&#129370;",name:"egg",hindi:"अंडा",speak:"E - egg"},
+  {char:"Ink",emoji:"&#128394;",name:"ink",hindi:"स्याही",speak:"I - ink"},{char:"Owl",emoji:"&#129417;",name:"owl",hindi:"उल्लू",speak:"O - owl"},
+  {char:"Up",emoji:"&#11014;",name:"up",hindi:"ऊपर",speak:"U - up"},{char:"Apple",emoji:"&#127822;",name:"apple",hindi:"सेब",speak:"A - apple"},
+  {char:"Ear",emoji:"&#128066;",name:"ear",hindi:"कान",speak:"E - ear"},{char:"Ice",emoji:"&#129482;",name:"ice",hindi:"बर्फ",speak:"I - ice"},
+  {char:"Open",emoji:"&#128513;",name:"open",hindi:"खुला",speak:"O - open"},{char:"Umbrella",emoji:"&#9730;",name:"umbrella",hindi:"छतरी",speak:"U - umbrella"}
 ]},
+sight_words:{title:"Sight Words",icon:"&#128065;",color:"c1",hint:"Common words",type:"items",items:[
+  {char:"the",emoji:"&#128218;",name:"the",hindi:"वह",speak:"the"},{char:"and",emoji:"&#128101;",name:"and",hindi:"और",speak:"and"},
+  {char:"I",emoji:"&#128104;",name:"I",hindi:"मैं",speak:"I"},{char:"you",emoji:"&#128105;",name:"you",hindi:"तुम",speak:"you"},
+  {char:"he",emoji:"&#128102;",name:"he",hindi:"वह",speak:"he"},{char:"she",emoji:"&#128103;",name:"she",hindi:"वह",speak:"she"},
+  {char:"we",emoji:"&#128106;",name:"we",hindi:"हम",speak:"we"},{char:"they",emoji:"&#128101;",name:"they",hindi:"वे",speak:"they"},
+  {char:"was",emoji:"&#128336;",name:"was",hindi:"था",speak:"was"},{char:"are",emoji:"&#128101;",name:"are",hindi:"हैं",speak:"are"},
+  {char:"my",emoji:"&#127968;",name:"my",hindi:"मेरा",speak:"my"},{char:"this",emoji:"&#128070;",name:"this",hindi:"यह",speak:"this"},
+  {char:"that",emoji:"&#128073;",name:"that",hindi:"वह",speak:"that"},{char:"have",emoji:"&#128149;",name:"have",hindi:"है",speak:"have"},
+  {char:"it",emoji:"&#128049;",name:"it",hindi:"यह",speak:"it"},{char:"a",emoji:"&#128100;",name:"a",hindi:"एक",speak:"a"}
+]},
+sentences_basic:{title:"Simple Sentences",icon:"&#128217;",color:"c1",hint:"Chhote vaakya",type:"items",items:[
+  {char:"I am",emoji:"&#128104;",name:"I am a boy.",hindi:"मैं एक लड़का हूँ।",speak:"I am a boy"},
+  {char:"This is",emoji:"&#128049;",name:"This is a cat.",hindi:"यह एक बिल्ली है।",speak:"This is a cat"},
+  {char:"I like",emoji:"&#128149;",name:"I like apples.",hindi:"मुझे सेब पसंद हैं।",speak:"I like apples"},
+  {char:"It is",emoji:"&#9728;",name:"It is sunny.",hindi:"धूप है।",speak:"It is sunny"},
+  {char:"I have",emoji:"&#128218;",name:"I have a book.",hindi:"मेरे पास किताब है।",speak:"I have a book"},
+  {char:"She is",emoji:"&#128103;",name:"She is tall.",hindi:"वह लंबी है।",speak:"She is tall"},
+  {char:"We go",emoji:"&#127979;",name:"We go to school.",hindi:"हम स्कूल जाते हैं।",speak:"We go to school"},
+  {char:"I see",emoji:"&#128064;",name:"I see a dog.",hindi:"मुझे एक कुत्ता दिखता है।",speak:"I see a dog"}
+]},
+sentences_class1:{title:"Sentences (Class 1)",icon:"&#128217;",color:"c1",hint:"5-6 word sentences",type:"items",items:[
+  {char:"S1",emoji:"&#128049;",name:"The cat sits on the mat.",hindi:"बिल्ली चटाई पर बैठती है।",speak:"The cat sits on the mat"},
+  {char:"S2",emoji:"&#9728;",name:"The sun is very bright.",hindi:"सूरज बहुत चमकीला है।",speak:"The sun is very bright"},
+  {char:"S3",emoji:"&#127800;",name:"I water the plants every day.",hindi:"मैं रोज पौधों को पानी देता हूँ।",speak:"I water the plants every day"},
+  {char:"S4",emoji:"&#128021;",name:"My dog is brown and fat.",hindi:"मेरा कुत्ता भूरा और मोटा है।",speak:"My dog is brown and fat"},
+  {char:"S5",emoji:"&#127869;",name:"We eat rice and dal.",hindi:"हम चावल और दाल खाते हैं।",speak:"We eat rice and dal"},
+  {char:"S6",emoji:"&#127979;",name:"My school is very nice.",hindi:"मेरा स्कूल बहुत अच्छा है।",speak:"My school is very nice"},
+  {char:"S7",emoji:"&#127800;",name:"Flowers bloom in the garden.",hindi:"बगीचे में फूल खिलते हैं।",speak:"Flowers bloom in the garden"},
+  {char:"S8",emoji:"&#127752;",name:"The rainbow has seven colors.",hindi:"इंद्रधनुष में सात रंग होते हैं।",speak:"The rainbow has seven colors"}
+]},
+nouns_verbs:{title:"Nouns & Verbs",icon:"&#128218;",color:"c1",hint:"Grammar basics",type:"items",items:[
+  {char:"Boy",emoji:"&#128102;",name:"Boy - Noun",hindi:"संज्ञा",speak:"Boy is a noun. Name of a person"},
+  {char:"Run",emoji:"&#127939;",name:"Run - Verb",hindi:"क्रिया",speak:"Run is a verb. It is an action word"},
+  {char:"Apple",emoji:"&#127822;",name:"Apple - Noun",hindi:"संज्ञा",speak:"Apple is a noun. Name of a thing"},
+  {char:"Jump",emoji:"&#129337;",name:"Jump - Verb",hindi:"क्रिया",speak:"Jump is a verb. It shows action"},
+  {char:"School",emoji:"&#127979;",name:"School - Noun",hindi:"संज्ञा",speak:"School is a noun. Name of a place"},
+  {char:"Eat",emoji:"&#127869;",name:"Eat - Verb",hindi:"क्रिया",speak:"Eat is a verb. It is an action"},
+  {char:"Dog",emoji:"&#128021;",name:"Dog - Noun",hindi:"संज्ञा",speak:"Dog is a noun. Name of an animal"},
+  {char:"Sing",emoji:"&#127908;",name:"Sing - Verb",hindi:"क्रिया",speak:"Sing is a verb. It is an action"},
+  {char:"Mango",emoji:"&#129389;",name:"Mango - Noun",hindi:"संज्ञा",speak:"Mango is a noun"},
+  {char:"Sleep",emoji:"&#128716;",name:"Sleep - Verb",hindi:"क्रिया",speak:"Sleep is a verb"}
+]},
+grammar_noun:{title:"Nouns",icon:"&#128216;",color:"c1",hint:"Proper & Common",type:"items",items:[
+  {char:"Common",emoji:"&#128021;",name:"Common Noun",hindi:"जातिवाचक",speak:"Dog, city, river are common nouns"},
+  {char:"Proper",emoji:"&#127470;&#127475;",name:"Proper Noun",hindi:"व्यक्तिवाचक",speak:"India, Delhi, Ram are proper nouns"},
+  {char:"Dog",emoji:"&#128021;",name:"dog → Tommy",hindi:"common → proper",speak:"dog is common. Tommy is proper"},
+  {char:"City",emoji:"&#127970;",name:"city → Delhi",hindi:"common → proper",speak:"city is common. Delhi is proper"},
+  {char:"Singular",emoji:"&#128049;",name:"cat → cats",hindi:"एकवचन → बहुवचन",speak:"cat is singular. cats is plural"},
+  {char:"Plural",emoji:"&#128028;",name:"ant → ants",hindi:"एकवचन → बहुवचन",speak:"ant is singular. ants is plural"},
+  {char:"Boy",emoji:"&#128102;",name:"boy → Ram",hindi:"common → proper",speak:"boy is common. Ram is proper"},
+  {char:"River",emoji:"&#127754;",name:"river → Ganga",hindi:"common → proper",speak:"river is common. Ganga is proper"}
+]},
+grammar_verb:{title:"Verbs & Tenses",icon:"&#128336;",color:"c1",hint:"Action + time",type:"items",items:[
+  {char:"Present",emoji:"&#9728;",name:"He runs.",hindi:"वर्तमान काल",speak:"He runs. Present tense. Happens now"},
+  {char:"Past",emoji:"&#128336;",name:"He ran.",hindi:"भूत काल",speak:"He ran. Past tense. Already happened"},
+  {char:"Future",emoji:"&#128640;",name:"He will run.",hindi:"भविष्य काल",speak:"He will run. Future tense. Will happen"},
+  {char:"Play",emoji:"&#9917;",name:"plays / played",hindi:"खेलना",speak:"He plays. He played"},
+  {char:"Eat",emoji:"&#127869;",name:"eats / ate",hindi:"खाना",speak:"She eats. She ate"},
+  {char:"Go",emoji:"&#127979;",name:"goes / went",hindi:"जाना",speak:"We go. We went"},
+  {char:"Write",emoji:"&#9999;",name:"writes / wrote",hindi:"लिखना",speak:"She writes. She wrote"},
+  {char:"See",emoji:"&#128064;",name:"sees / saw",hindi:"देखना",speak:"I see. I saw"}
+]},
+tenses_basic:{title:"Tenses",icon:"&#128336;",color:"c1",hint:"Present Past Future",type:"items",items:[
+  {char:"I eat.",emoji:"&#127869;",name:"I eat. (Present)",hindi:"मैं खाता हूँ।",speak:"I eat. Present tense"},
+  {char:"I ate.",emoji:"&#127869;",name:"I ate. (Past)",hindi:"मैंने खाया।",speak:"I ate. Past tense"},
+  {char:"She reads.",emoji:"&#128218;",name:"She reads.",hindi:"वह पढ़ती है।",speak:"She reads. Present"},
+  {char:"She read.",emoji:"&#128218;",name:"She read.",hindi:"उसने पढ़ा।",speak:"She read. Past"},
+  {char:"They play.",emoji:"&#9917;",name:"They play.",hindi:"वे खेलते हैं।",speak:"They play. Present"},
+  {char:"They played.",emoji:"&#9917;",name:"They played.",hindi:"उन्होंने खेला।",speak:"They played. Past"},
+  {char:"Will come.",emoji:"&#128640;",name:"He will come.",hindi:"वह आएगा।",speak:"He will come. Future"},
+  {char:"Will rain.",emoji:"&#127783;",name:"It will rain.",hindi:"बारिश होगी।",speak:"It will rain. Future"}
+]},
+paragraph_writing:{title:"Paragraph Writing",icon:"&#128221;",color:"c1",hint:"2-6 lines",type:"items",items:[
+  {char:"My Pet",emoji:"&#128021;",name:"My Pet Dog",hindi:"मेरा पालतू कुत्ता",speak:"I have a pet dog named Tommy. He is brown and big. He eats biscuits and barks at strangers. I love my dog very much"},
+  {char:"My School",emoji:"&#127979;",name:"My School",hindi:"मेरा विद्यालय",speak:"My school is very big. It has many classrooms and a playground. My teacher is very kind. I love my school"},
+  {char:"Rainy Day",emoji:"&#127783;",name:"A Rainy Day",hindi:"बरसात का दिन",speak:"Today it is raining. The sky is dark with clouds. I see lightning and hear thunder. Frogs jump in puddles. I love rainy days"},
+  {char:"Family",emoji:"&#128106;",name:"My Family",hindi:"मेरा परिवार",speak:"I have a happy family. My father goes to work. My mother cooks food. My sister and I go to school"},
+  {char:"Mango",emoji:"&#129389;",name:"The Mango",hindi:"आम",speak:"Mango is the king of fruits. It is yellow and sweet. We get it in summer. I love eating mangoes"},
+  {char:"Cow",emoji:"&#128004;",name:"The Cow",hindi:"गाय",speak:"The cow is a domestic animal. It gives us milk. It has four legs and a tail. It eats grass. The cow is very useful to us"}
+]},
+reading_comp:{title:"Reading",icon:"&#128214;",color:"c1",hint:"Read and understand",type:"items",items:[
+  {char:"Story 1",emoji:"&#129409;",name:"The Lion & Mouse",hindi:"शेर और चूहा",speak:"Once a lion was sleeping. A mouse ran over it. The lion caught the mouse. The mouse said please let me go. Later the mouse saved the lion from a net. Moral, be kind to all"},
+  {char:"Story 2",emoji:"&#128035;",name:"Two Friends",hindi:"दो दोस्त",speak:"Two friends were walking. They saw a bear. One friend climbed a tree. The other lay still. The bear went away. Moral, a friend in need is a friend indeed"},
+  {char:"Story 3",emoji:"&#128028;",name:"Ant & Grasshopper",hindi:"चींटी और टिड्डा",speak:"An ant worked hard all summer. A grasshopper played and sang. In winter the ant had food but the grasshopper had none. Moral, always work hard"},
+  {char:"Story 4",emoji:"&#128013;",name:"The Snake & Farmer",hindi:"साँप और किसान",speak:"A farmer found a cold snake. He kept it warm. The snake bit him. Moral, never trust an enemy"}
+]},
+hindi_rhymes:{title:"Hindi Kavita",icon:"&#127925;",color:"c4",hint:"Chhoti kavitaen",type:"rhymes",items:[
+  {char:"Machli",emoji:"&#128031;",name:"Machli Jal Ki Rani",line1:"मछली जल की रानी है",line2:"जीवन उसका पानी है",line3:"हाथ लगाओ डर जाएगी",line4:"बाहर निकालो मर जाएगी",speak:"Machli jal ki rani hai, jeevan uska paani hai, haath lagao dar jaayegi, bahar nikalo mar jaayegi"},
+  {char:"Lakdi",emoji:"&#129683;",name:"Lakdi Ki Kaathi",line1:"लकड़ी की काठी काठी पे घोड़ा",line2:"घोड़े की दुम पे जो मारा हथौड़ा",line3:"दौड़ा दौड़ा दौड़ा घोड़ा",line4:"दुम उठाकर दौड़ा घोड़ा",speak:"Lakdi ki kaathi, kaathi pe ghoda, ghode ki dum pe jo mara hathauda, dauda dauda dauda ghoda"},
+  {char:"Chanda",emoji:"&#127769;",name:"Chanda Mama",line1:"चंदा मामा दूर के",line2:"पुए पकाएँ बूर के",line3:"आप खाएं थाली में",line4:"मुन्ने को दें प्याली में",speak:"Chanda mama dur ke, puye pakayen bur ke, aap khayen thaali mein, munne ko den pyaali mein"},
+  {char:"Aao",emoji:"&#127800;",name:"Aao Milkar Khelen",line1:"आओ मिलकर खेलें हम",line2:"खूब मचाएँ धूम",line3:"फूल बनाएँ रंगीन से",line4:"महकाएँ हर कोना",speak:"Aao milkar khelen hum, khub machayen dhoom, phool banayen rangeenon se, mahakayen har kona"}
+]},
+hindi_2letter:{title:"Hindi 2-Letter Words",icon:"&#2325;",color:"c4",hint:"Do akshar ke shabd",type:"items",items:[
+  {char:"कब",emoji:"&#128336;",name:"कब",hindi:"when",speak:"Kab - when"},{char:"जल",emoji:"&#128167;",name:"जल",hindi:"water",speak:"Jal - water"},
+  {char:"फल",emoji:"&#127822;",name:"फल",hindi:"fruit",speak:"Phal - fruit"},{char:"वन",emoji:"&#127795;",name:"वन",hindi:"forest",speak:"Van - forest"},
+  {char:"घर",emoji:"&#127968;",name:"घर",hindi:"home",speak:"Ghar - home"},{char:"मन",emoji:"&#129505;",name:"मन",hindi:"mind",speak:"Man - mind"},
+  {char:"नल",emoji:"&#129704;",name:"नल",hindi:"tap",speak:"Nal - tap"},{char:"कप",emoji:"&#9749;",name:"कप",hindi:"cup",speak:"Kap - cup"},
+  {char:"सब",emoji:"&#128101;",name:"सब",hindi:"all",speak:"Sab - all"},{char:"तब",emoji:"&#128336;",name:"तब",hindi:"then",speak:"Tab - then"},
+  {char:"पथ",emoji:"&#128246;",name:"पथ",hindi:"path",speak:"Path - path"},{char:"रथ",emoji:"&#128661;",name:"रथ",hindi:"chariot",speak:"Rath - chariot"}
+]},
+hindi_matra_aa:{title:"आ की मात्रा",icon:"&#2310;",color:"c4",hint:"aa wali words",type:"items",items:[
+  {char:"आम",emoji:"&#129389;",name:"आम",hindi:"aam - mango",speak:"Aam - mango"},{char:"माँ",emoji:"&#128105;",name:"माँ",hindi:"maa - mother",speak:"Maa - mother"},
+  {char:"घास",emoji:"&#127807;",name:"घास",hindi:"ghaas - grass",speak:"Ghaas - grass"},{char:"काम",emoji:"&#9999;",name:"काम",hindi:"kaam - work",speak:"Kaam - work"},
+  {char:"नाम",emoji:"&#128218;",name:"नाम",hindi:"naam - name",speak:"Naam - name"},{char:"दाल",emoji:"&#127858;",name:"दाल",hindi:"daal - lentil",speak:"Daal - lentil"},
+  {char:"बाल",emoji:"&#128049;",name:"बाल",hindi:"baal - hair",speak:"Baal - hair"},{char:"साल",emoji:"&#128198;",name:"साल",hindi:"saal - year",speak:"Saal - year"},
+  {char:"राम",emoji:"&#128112;",name:"राम",hindi:"Ram",speak:"Ram"},{char:"थाल",emoji:"&#127869;",name:"थाल",hindi:"thaal - plate",speak:"Thaal - plate"},
+  {char:"माल",emoji:"&#127890;",name:"माल",hindi:"maal - goods",speak:"Maal - goods"},{char:"पाल",emoji:"&#9971;",name:"पाल",hindi:"paal - sail",speak:"Paal - sail"}
+]},
+hindi_matra_i:{title:"इ-ई की मात्रा",icon:"&#2311;",color:"c4",hint:"i-ee wali words",type:"items",items:[
+  {char:"किताब",emoji:"&#128218;",name:"किताब",hindi:"kitaab - book",speak:"Kitaab - book"},{char:"गिलास",emoji:"&#129380;",name:"गिलास",hindi:"gilaas - glass",speak:"Gilaas - glass"},
+  {char:"दिन",emoji:"&#9728;",name:"दिन",hindi:"din - day",speak:"Din - day"},{char:"बिल्ली",emoji:"&#128049;",name:"बिल्ली",hindi:"billi - cat",speak:"Billi - cat"},
+  {char:"नीला",emoji:"&#128309;",name:"नीला",hindi:"neela - blue",speak:"Neela - blue"},{char:"पीला",emoji:"&#128993;",name:"पीला",hindi:"peela - yellow",speak:"Peela - yellow"},
+  {char:"चिड़िया",emoji:"&#128038;",name:"चिड़िया",hindi:"chidiya - bird",speak:"Chidiya - sparrow"},{char:"तितली",emoji:"&#129419;",name:"तितली",hindi:"titli - butterfly",speak:"Titli - butterfly"},
+  {char:"सीता",emoji:"&#128103;",name:"सीता",hindi:"Seeta - name",speak:"Seeta"},{char:"मिठाई",emoji:"&#127851;",name:"मिठाई",hindi:"mithaai - sweets",speak:"Mithaai - sweets"}
+]},
+hindi_matra_all:{title:"सभी मात्राएँ",icon:"&#2366;",color:"c4",hint:"All matras",type:"items",items:[
+  {char:"ा",emoji:"&#127822;",name:"आम (aa matra)",hindi:"आ की मात्रा",speak:"Aa ki maatra. Aam - mango"},
+  {char:"ि",emoji:"&#128049;",name:"बिल्ली (i matra)",hindi:"इ की मात्रा",speak:"Chhoti i ki maatra. Billi - cat"},
+  {char:"ी",emoji:"&#128309;",name:"नीला (ee matra)",hindi:"ई की मात्रा",speak:"Badi ee ki maatra. Neela - blue"},
+  {char:"ु",emoji:"&#128021;",name:"कुत्ता (u matra)",hindi:"उ की मात्रा",speak:"Chhota u ki maatra. Kutta - dog"},
+  {char:"ू",emoji:"&#129411;",name:"ऊँट (oo matra)",hindi:"ऊ की मात्रा",speak:"Bada oo ki maatra. Oont - camel"},
+  {char:"े",emoji:"&#127822;",name:"सेब (e matra)",hindi:"ए की मात्रा",speak:"E ki maatra. Seb - apple"},
+  {char:"ै",emoji:"&#128083;",name:"ऐनक (ai matra)",hindi:"ऐ की मात्रा",speak:"Ai ki maatra. Ainak - spectacles"},
+  {char:"ो",emoji:"&#129438;",name:"मोर (o matra)",hindi:"ओ की मात्रा",speak:"O ki maatra. Mor - peacock"},
+  {char:"ौ",emoji:"&#128295;",name:"औजार (au matra)",hindi:"औ की मात्रा",speak:"Au ki maatra. Auzaar - tool"},
+  {char:"ं",emoji:"&#127893;",name:"संख्या (anusvaar)",hindi:"अनुस्वार",speak:"Anusvaar. Sankhya - number"}
+]},
+hindi_words_class1:{title:"Hindi Words",icon:"&#2325;",color:"c4",hint:"Common words",type:"items",items:[
+  {char:"पानी",emoji:"&#128167;",name:"पानी",hindi:"paani - water",speak:"Paani - water"},{char:"खाना",emoji:"&#127869;",name:"खाना",hindi:"khaana - food",speak:"Khaana - food"},
+  {char:"सुबह",emoji:"&#9728;",name:"सुबह",hindi:"subah - morning",speak:"Subah - morning"},{char:"रात",emoji:"&#127769;",name:"रात",hindi:"raat - night",speak:"Raat - night"},
+  {char:"बाज़ार",emoji:"&#127978;",name:"बाज़ार",hindi:"baazar - market",speak:"Baazar - market"},{char:"कपड़ा",emoji:"&#128084;",name:"कपड़ा",hindi:"kapda - cloth",speak:"Kapda - cloth"},
+  {char:"दोस्त",emoji:"&#129309;",name:"दोस्त",hindi:"dost - friend",speak:"Dost - friend"},{char:"बच्चा",emoji:"&#128118;",name:"बच्चा",hindi:"bachcha - child",speak:"Bachcha - child"},
+  {char:"खुशी",emoji:"&#128512;",name:"खुशी",hindi:"khushi - happiness",speak:"Khushi - happiness"},{char:"गाँव",emoji:"&#127979;",name:"गाँव",hindi:"gaanv - village",speak:"Gaanv - village"}
+]},
+hindi_sentences:{title:"Hindi Sentences",icon:"&#128221;",color:"c4",hint:"Vaakya banana",type:"items",items:[
+  {char:"V1",emoji:"&#128104;",name:"राम स्कूल जाता है।",hindi:"Ram school jaata hai",speak:"Ram school jaata hai. Ram goes to school"},
+  {char:"V2",emoji:"&#127822;",name:"आम मीठा होता है।",hindi:"Aam meetha hota hai",speak:"Aam meetha hota hai. Mango is sweet"},
+  {char:"V3",emoji:"&#9728;",name:"सूरज पूरब में उगता है।",hindi:"Suraj purab mein ugta hai",speak:"Suraj purab mein ugta hai. Sun rises in the east"},
+  {char:"V4",emoji:"&#127800;",name:"फूल सुंदर होते हैं।",hindi:"Phool sundar hote hain",speak:"Phool sundar hote hain. Flowers are beautiful"},
+  {char:"V5",emoji:"&#128021;",name:"कुत्ता भौंकता है।",hindi:"Kutta bhaukta hai",speak:"Kutta bhaukta hai. Dog barks"},
+  {char:"V6",emoji:"&#127769;",name:"रात को तारे दिखते हैं।",hindi:"Raat ko taare dikhte hain",speak:"Raat ko taare dikhte hain. Stars are seen at night"}
+]},
+hindi_essay:{title:"Hindi Nibandh",icon:"&#128221;",color:"c4",hint:"Short essays",type:"items",items:[
+  {char:"गाय",emoji:"&#128004;",name:"गाय पर निबंध",hindi:"गाय",speak:"Gaay hamare desh ka pavitra pashu hai. Yah hamare liye doodh deti hai. Gaay ke chaar pair hote hain. Yah ghaas khaati hai. Gaay hamare liye bahut upyogi hai"},
+  {char:"मेरा घर",emoji:"&#127968;",name:"मेरा घर",hindi:"Mera Ghar",speak:"Mera ghar bahut sundar hai. Isme chaar kamre hain. Mujhe apna ghar bahut pasand hai"},
+  {char:"वर्षा",emoji:"&#127783;",name:"वर्षा ऋतु",hindi:"Varsha Ritu",speak:"Varsha ritu mein baarish hoti hai. Dariyaa aur talab bhar jaate hain. Bachhon ko baarish mein khelna pasand hai"},
+  {char:"आम",emoji:"&#129389;",name:"आम पर निबंध",hindi:"Aam",speak:"Aam phalon ka raja hai. Yah peele rang ka meetha phal hai. Garmiyon mein aata hai. Bachche aam bahut pasand karte hain"}
+]},
+counting_objects:{title:"Counting Objects",icon:"&#128290;",color:"c2",hint:"Count karo",type:"items",items:[
+  {char:"1",emoji:"&#127822;",name:"1 Apple",hindi:"एक",speak:"One apple. Count - one"},{char:"2",emoji:"&#128021;",name:"2 Dogs",hindi:"दो",speak:"Two dogs. Count - two"},
+  {char:"3",emoji:"&#11088;",name:"3 Stars",hindi:"तीन",speak:"Three stars. Count - three"},{char:"4",emoji:"&#127800;",name:"4 Flowers",hindi:"चार",speak:"Four flowers. Count - four"},
+  {char:"5",emoji:"&#128049;",name:"5 Cats",hindi:"पाँच",speak:"Five cats. Count - five"},{char:"6",emoji:"&#127822;",name:"6 Apples",hindi:"छह",speak:"Six apples. Count - six"},
+  {char:"7",emoji:"&#11088;",name:"7 Stars",hindi:"सात",speak:"Seven stars. Count - seven"},{char:"8",emoji:"&#128038;",name:"8 Birds",hindi:"आठ",speak:"Eight birds. Count - eight"},
+  {char:"9",emoji:"&#127800;",name:"9 Flowers",hindi:"नौ",speak:"Nine flowers. Count - nine"},{char:"10",emoji:"&#128021;",name:"10 Dogs",hindi:"दस",speak:"Ten dogs. Count - ten"}
+]},
+big_small:{title:"Big & Small",icon:"&#8651;",color:"c2",hint:"Size comparisons",type:"opposites",items:[
+  {char:"Big",emoji:"&#128024;",name:"Big",opp:"Small",oppEmoji:"&#128027;",hindi:"बड़ा",oppHindi:"छोटा",speak:"Big",oppSpeak:"Small"},
+  {char:"Long",emoji:"&#128013;",name:"Long",opp:"Short",oppEmoji:"&#128027;",hindi:"लंबा",oppHindi:"छोटा",speak:"Long",oppSpeak:"Short"},
+  {char:"Tall",emoji:"&#129421;",name:"Tall",opp:"Short",oppEmoji:"&#128054;",hindi:"लंबा",oppHindi:"नाटा",speak:"Tall",oppSpeak:"Short"},
+  {char:"Heavy",emoji:"&#129728;",name:"Heavy",opp:"Light",oppEmoji:"&#127800;",hindi:"भारी",oppHindi:"हल्का",speak:"Heavy",oppSpeak:"Light"},
+  {char:"Full",emoji:"&#129371;",name:"Full",opp:"Empty",oppEmoji:"&#129370;",hindi:"भरा",oppHindi:"खाली",speak:"Full",oppSpeak:"Empty"},
+  {char:"Hot",emoji:"&#9728;",name:"Hot",opp:"Cold",oppEmoji:"&#10052;",hindi:"गरम",oppHindi:"ठंडा",speak:"Hot",oppSpeak:"Cold"},
+  {char:"Day",emoji:"&#9728;",name:"Day",opp:"Night",oppEmoji:"&#127769;",hindi:"दिन",oppHindi:"रात",speak:"Day",oppSpeak:"Night"},
+  {char:"Fast",emoji:"&#128171;",name:"Fast",opp:"Slow",oppEmoji:"&#128034;",hindi:"तेज़",oppHindi:"धीमा",speak:"Fast",oppSpeak:"Slow"}
+]},
+before_after:{title:"Before & After",icon:"&#8644;",color:"c2",hint:"Numbers order",type:"items",items:[
+  {char:"1,2,3",emoji:"&#49;",name:"1 before 2",hindi:"पहले",speak:"One comes before two"},{char:"8,9,10",emoji:"&#49;&#48;",name:"10 after 9",hindi:"बाद में",speak:"Ten comes after nine"},
+  {char:"4,5,6",emoji:"&#53;",name:"5 between 4 and 6",hindi:"बीच में",speak:"Five is between four and six"},{char:"6,7,8",emoji:"&#54;",name:"6 before 7",hindi:"पहले",speak:"Six comes before seven"},
+  {char:"14,15",emoji:"&#49;&#53;",name:"15 after 14",hindi:"बाद में",speak:"Fifteen comes after fourteen"},{char:"19,20",emoji:"&#49;&#57;",name:"19 before 20",hindi:"पहले",speak:"Nineteen comes before twenty"},
+  {char:"49,50",emoji:"&#53;&#48;",name:"50 after 49",hindi:"बाद में",speak:"Fifty comes after forty nine"},{char:"99,100",emoji:"&#49;&#48;&#48;",name:"100 after 99",hindi:"बाद में",speak:"One hundred comes after ninety nine"}
+]},
+money_basics:{title:"Money Basics",icon:"&#129297;",color:"c2",hint:"Paisa seekho",type:"items",items:[
+  {char:"1₹",emoji:"&#129297;",name:"1 Rupee",hindi:"एक रुपया",speak:"One rupee coin"},{char:"5₹",emoji:"&#129297;",name:"5 Rupees",hindi:"पाँच रुपए",speak:"Five rupees"},
+  {char:"10₹",emoji:"&#128181;",name:"10 Rupees",hindi:"दस रुपए",speak:"Ten rupees note"},{char:"50₹",emoji:"&#128181;",name:"50 Rupees",hindi:"पचास रुपए",speak:"Fifty rupees"},
+  {char:"100₹",emoji:"&#128181;",name:"100 Rupees",hindi:"सौ रुपए",speak:"One hundred rupees"},{char:"2+3",emoji:"&#129297;",name:"2 + 3 = 5 Rs",hindi:"पाँच रुपए",speak:"Two rupees plus three rupees equals five rupees"},
+  {char:"Change",emoji:"&#128181;",name:"10 - 7 = 3 Rs back",hindi:"बाकी पैसे",speak:"If cost is seven and you give ten, you get three rupees back"},{char:"Total",emoji:"&#129297;",name:"5 + 5 = 10 Rs",hindi:"कुल पैसे",speak:"Five rupees plus five rupees equals ten rupees"}
+]},
+time_money:{title:"Time & Money",icon:"&#128336;",color:"c2",hint:"Samay aur paisa",type:"items",items:[
+  {char:"Morning",emoji:"&#9728;",name:"Morning",hindi:"सुबह",speak:"Morning - Subah"},{char:"Afternoon",emoji:"&#127780;",name:"Afternoon",hindi:"दोपहर",speak:"Afternoon - Dopahar"},
+  {char:"Evening",emoji:"&#127782;",name:"Evening",hindi:"शाम",speak:"Evening - Shaam"},{char:"Night",emoji:"&#127769;",name:"Night",hindi:"रात",speak:"Night - Raat"},
+  {char:"1 hour",emoji:"&#128336;",name:"60 mins = 1 Hour",hindi:"एक घंटा",speak:"Sixty minutes make one hour"},{char:"Clock",emoji:"&#128336;",name:"O'Clock",hindi:"बजे",speak:"When minute hand points to 12 it is O'clock"},
+  {char:"₹10+5",emoji:"&#129297;",name:"10 + 5 = 15 Rs",hindi:"पंद्रह रुपए",speak:"Ten plus five rupees equals fifteen rupees"},{char:"Change",emoji:"&#128181;",name:"Give 20, Cost 14",hindi:"बाकी 6 रुपए",speak:"If something costs fourteen and you give twenty, you get six rupees back"}
+]},
+division_basic:{title:"Division",icon:"&#247;",color:"c2",hint:"Baantna",type:"maths",items:[
+  {char:"6÷2",emoji:"&#54;&#247;&#50;",name:"6 ÷ 2 = 3",hindi:"छह बाँटो दो में",speak:"Six divided by two equals three",answer:3},
+  {char:"8÷2",emoji:"&#56;&#247;&#50;",name:"8 ÷ 2 = 4",hindi:"आठ बाँटो दो में",speak:"Eight divided by two equals four",answer:4},
+  {char:"9÷3",emoji:"&#57;&#247;&#51;",name:"9 ÷ 3 = 3",hindi:"नौ बाँटो तीन में",speak:"Nine divided by three equals three",answer:3},
+  {char:"10÷5",emoji:"&#49;&#48;&#247;&#53;",name:"10 ÷ 5 = 2",hindi:"दस बाँटो पाँच में",speak:"Ten divided by five equals two",answer:2},
+  {char:"12÷4",emoji:"&#49;&#50;&#247;&#52;",name:"12 ÷ 4 = 3",hindi:"बारह बाँटो चार में",speak:"Twelve divided by four equals three",answer:3},
+  {char:"15÷3",emoji:"&#49;&#53;&#247;&#51;",name:"15 ÷ 3 = 5",hindi:"पंद्रह बाँटो तीन में",speak:"Fifteen divided by three equals five",answer:5},
+  {char:"20÷4",emoji:"&#50;&#48;&#247;&#52;",name:"20 ÷ 4 = 5",hindi:"बीस बाँटो चार में",speak:"Twenty divided by four equals five",answer:5},
+  {char:"16÷2",emoji:"&#49;&#54;&#247;&#50;",name:"16 ÷ 2 = 8",hindi:"सोलह बाँटो दो में",speak:"Sixteen divided by two equals eight",answer:8}
+]},
+plants:{title:"Plants",icon:"&#127807;",color:"c6",hint:"Paudhe aur unke hisse",type:"items",items:[
+  {char:"Seed",emoji:"&#127807;",name:"Seed",hindi:"बीज",speak:"Seed - Bij. Plants grow from seeds"},{char:"Root",emoji:"&#127807;",name:"Root",hindi:"जड़",speak:"Root - Jar. Roots hold plant in soil"},
+  {char:"Stem",emoji:"&#127795;",name:"Stem",hindi:"तना",speak:"Stem - Tana. Carries water to leaves"},{char:"Leaf",emoji:"&#127810;",name:"Leaf",hindi:"पत्ता",speak:"Leaf - Patta. Makes food for plants"},
+  {char:"Flower",emoji:"&#127800;",name:"Flower",hindi:"फूल",speak:"Flower - Phool. Flowers become fruits"},{char:"Fruit",emoji:"&#127822;",name:"Fruit",hindi:"फल",speak:"Fruit - Phal. We eat fruits"},
+  {char:"Sunlight",emoji:"&#9728;",name:"Sunlight",hindi:"धूप",speak:"Plants need sunlight to make food"},{char:"Water",emoji:"&#128167;",name:"Water",hindi:"पानी",speak:"Plants need water to grow"}
+]},
+safety_rules:{title:"Safety Rules",icon:"&#128721;",color:"c6",hint:"Suraksha ke niyam",type:"items",items:[
+  {char:"Road",emoji:"&#128246;",name:"Road Safety",hindi:"सड़क सुरक्षा",speak:"Always look left and right before crossing the road"},{char:"Fire",emoji:"&#128293;",name:"Fire Safety",hindi:"आग से सुरक्षा",speak:"Never play with fire. Call adults if you see fire"},
+  {char:"Stranger",emoji:"&#128683;",name:"Stranger Danger",hindi:"अनजान से सावधान",speak:"Never talk to or go with strangers"},{char:"Electric",emoji:"&#9889;",name:"Electric Safety",hindi:"बिजली से सावधान",speak:"Never touch electric sockets or wires"},
+  {char:"Water",emoji:"&#128167;",name:"Water Safety",hindi:"पानी में सावधान",speak:"Never go near deep water without adults"},{char:"Helmet",emoji:"&#128745;",name:"Wear Helmet",hindi:"हेलमेट पहनो",speak:"Always wear a helmet while cycling"},
+  {char:"Emergency",emoji:"&#128222;",name:"Emergency Numbers",hindi:"आपातकालीन नंबर",speak:"Police one hundred. Fire one zero one. Ambulance one zero eight"}
+]},
+gk_class1:{title:"General Knowledge",icon:"&#127758;",color:"c9",hint:"Samanya gyan",type:"items",items:[
+  {char:"Capital",emoji:"&#127470;&#127475;",name:"Capital of India",hindi:"नई दिल्ली",speak:"New Delhi is the capital of India"},{char:"Flag",emoji:"&#127470;&#127475;",name:"Our Flag - Tiranga",hindi:"तिरंगा",speak:"Our flag has three colors - saffron, white and green with Ashoka Chakra"},
+  {char:"Language",emoji:"&#128172;",name:"National Language",hindi:"हिंदी",speak:"Hindi is our national language"},{char:"Currency",emoji:"&#128181;",name:"Currency - Rupee",hindi:"रुपया",speak:"Indian currency is called Rupee"},
+  {char:"Continent",emoji:"&#127758;",name:"India in Asia",hindi:"एशिया",speak:"India is in the continent of Asia"},{char:"Neighbors",emoji:"&#127758;",name:"Neighboring Countries",hindi:"पड़ोसी देश",speak:"India's neighbors are Pakistan, Nepal, China, Bangladesh and Sri Lanka"},
+  {char:"PM",emoji:"&#128104;",name:"Prime Minister",hindi:"प्रधानमंत्री",speak:"The Prime Minister is the head of the Government of India"},{char:"President",emoji:"&#127968;",name:"President",hindi:"राष्ट्रपति",speak:"The President is the constitutional head of India"}
+]},
+gk_india:{title:"India GK",icon:"&#127470;&#127475;",color:"c9",hint:"Bharat ki jaankari",type:"items",items:[
+  {char:"Rivers",emoji:"&#127754;",name:"Rivers of India",hindi:"नदियाँ",speak:"Ganga, Yamuna, Brahmaputra are major rivers of India"},{char:"Mountains",emoji:"&#9968;",name:"Mountains",hindi:"पहाड़",speak:"Himalayas is the highest mountain range in India"},
+  {char:"Dances",emoji:"&#128131;",name:"Classical Dances",hindi:"शास्त्रीय नृत्य",speak:"Bharatanatyam from Tamil Nadu and Kathak from North India are classical dances"},{char:"Food",emoji:"&#127869;",name:"Famous Foods",hindi:"प्रसिद्ध भोजन",speak:"India has many foods like biryani, dosa, dal roti and pani puri"},
+  {char:"States",emoji:"&#127470;&#127475;",name:"States & UTs",hindi:"राज्य",speak:"India has twenty eight states and eight union territories"},{char:"Independence",emoji:"&#127881;",name:"Independence Day",hindi:"स्वतंत्रता दिवस",speak:"India got independence on 15 August 1947 from British rule"}
+]},
+festivals:{title:"Festivals",icon:"&#127881;",color:"c9",hint:"Tyohar aur parv",type:"items",items:[
+  {char:"Diwali",emoji:"&#127982;",name:"Diwali",hindi:"दीवाली",speak:"Diwali is the festival of lights. We light diyas"},{char:"Holi",emoji:"&#127881;",name:"Holi",hindi:"होली",speak:"Holi is the festival of colors. We play with gulal"},
+  {char:"Eid",emoji:"&#9790;",name:"Eid",hindi:"ईद",speak:"Eid is celebrated by Muslims. We eat seviyan and share gifts"},{char:"Christmas",emoji:"&#127876;",name:"Christmas",hindi:"क्रिसमस",speak:"Christmas is on 25 December. Santa brings gifts for children"},
+  {char:"Dussehra",emoji:"&#128171;",name:"Dussehra",hindi:"दशहरा",speak:"Dussehra celebrates victory of Ram over Ravana"},{char:"Janmashtami",emoji:"&#128048;",name:"Janmashtami",hindi:"जन्माष्टमी",speak:"Janmashtami is the birthday of Lord Krishna"},
+  {char:"Independence",emoji:"&#127470;&#127475;",name:"Independence Day",hindi:"15 अगस्त",speak:"Independence Day is on 15 August. India got freedom in 1947"},{char:"Republic",emoji:"&#127470;&#127475;",name:"Republic Day",hindi:"26 जनवरी",speak:"Republic Day is on 26 January. Our Constitution came into effect"}
+]},
+human_body:{title:"Human Body",icon:"&#129485;",color:"c6",hint:"Hamaara shareer",type:"items",items:[
+  {char:"Bones",emoji:"&#128128;",name:"Bones",hindi:"हड्डियाँ",speak:"Bones give our body its shape and support"},{char:"Heart",emoji:"&#129505;",name:"Heart",hindi:"हृदय",speak:"Heart pumps blood all over our body"},
+  {char:"Lungs",emoji:"&#129738;",name:"Lungs",hindi:"फेफड़े",speak:"Lungs help us breathe oxygen"},{char:"Brain",emoji:"&#129504;",name:"Brain",hindi:"मस्तिष्क",speak:"Brain controls all parts of our body"},
+  {char:"Stomach",emoji:"&#129462;",name:"Stomach",hindi:"पेट",speak:"Stomach digests the food we eat"},{char:"Eyes",emoji:"&#128064;",name:"Eyes",hindi:"आँखें",speak:"Eyes help us see"},
+  {char:"Ears",emoji:"&#128066;",name:"Ears",hindi:"कान",speak:"Ears help us hear"},{char:"Nose",emoji:"&#128067;",name:"Nose",hindi:"नाक",speak:"Nose helps us smell and breathe"},
+  {char:"Skin",emoji:"&#129485;",name:"Skin",hindi:"त्वचा",speak:"Skin covers and protects our body"},{char:"Muscles",emoji:"&#128170;",name:"Muscles",hindi:"मांसपेशियाँ",speak:"Muscles help us move our body"}
+]},
+weather:{title:"Weather",icon:"&#127780;",color:"c6",hint:"Mausam ke types",type:"items",items:[
+  {char:"Sunny",emoji:"&#9728;",name:"Sunny",hindi:"धूप",speak:"Sunny day - lots of sunshine"},{char:"Rainy",emoji:"&#127783;",name:"Rainy",hindi:"बरसात",speak:"Rainy day - rain falls from clouds"},
+  {char:"Cloudy",emoji:"&#9729;",name:"Cloudy",hindi:"बादल",speak:"Cloudy day - sky is full of clouds"},{char:"Windy",emoji:"&#127788;",name:"Windy",hindi:"हवा",speak:"Windy day - strong winds blow"},
+  {char:"Foggy",emoji:"&#127787;",name:"Foggy",hindi:"कोहरा",speak:"Foggy weather - fog makes it hard to see"},{char:"Storm",emoji:"&#9928;",name:"Storm",hindi:"तूफान",speak:"Storm - strong wind and heavy rain"},
+  {char:"Rainbow",emoji:"&#127752;",name:"Rainbow",hindi:"इंद्रधनुष",speak:"Rainbow appears after rain with seven colors"},{char:"Snow",emoji:"&#10052;",name:"Snow",hindi:"बर्फ",speak:"Snow falls in very cold weather"}
+]},
+transport_comm:{title:"Transport & Communication",icon:"&#128663;",color:"c6",hint:"Aana jaana aur baat karna",type:"items",items:[
+  {char:"Road",emoji:"&#128663;",name:"Road Transport",hindi:"सड़क परिवहन",speak:"Cars, buses and trucks travel on roads"},{char:"Rail",emoji:"&#128647;",name:"Rail Transport",hindi:"रेल परिवहन",speak:"Trains travel on railway tracks"},
+  {char:"Air",emoji:"&#9992;",name:"Air Transport",hindi:"वायु परिवहन",speak:"Aeroplanes travel through the air"},{char:"Water",emoji:"&#9971;",name:"Water Transport",hindi:"जल परिवहन",speak:"Ships and boats travel on water"},
+  {char:"Phone",emoji:"&#128222;",name:"Telephone",hindi:"फ़ोन",speak:"We use telephone to talk to people far away"},{char:"TV",emoji:"&#128250;",name:"Television",hindi:"टेलीविज़न",speak:"Television is a means of mass communication"},
+  {char:"Letter",emoji:"&#9993;",name:"Letter / Post",hindi:"पत्र",speak:"We write letters to communicate by post"},{char:"Internet",emoji:"&#127760;",name:"Internet",hindi:"इंटरनेट",speak:"Internet helps us communicate with people worldwide"}
+]},
+
+// ── MISSING KEYS ──────────────────────────────────────────────────────
+
 rhymes:{title:"Nursery Rhymes",icon:"&#127925;",color:"c1",hint:"Fun poems!",type:"rhymes",items:[
   {char:"Twinkle",emoji:"&#11088;",name:"Twinkle Twinkle",line1:"Twinkle twinkle little star",line2:"How I wonder what you are",line3:"Up above the world so high",line4:"Like a diamond in the sky",speak:"Twinkle twinkle little star, how I wonder what you are, up above the world so high, like a diamond in the sky"},
   {char:"Johny",emoji:"&#128118;",name:"Johny Johny",line1:"Johny Johny yes papa",line2:"Eating sugar? No papa",line3:"Telling lies? No papa",line4:"Open your mouth, Ha ha ha!",speak:"Johny Johny yes papa, eating sugar no papa, telling lies no papa, open your mouth ha ha ha"},
   {char:"Baa Baa",emoji:"&#128017;",name:"Baa Baa Black Sheep",line1:"Baa baa black sheep have you any wool",line2:"Yes sir yes sir three bags full",line3:"One for my master one for my dame",line4:"One for the little boy who lives down the lane",speak:"Baa baa black sheep, have you any wool, yes sir yes sir three bags full"},
-  {char:"Jack",emoji:"&#127944;",name:"Jack and Jill",line1:"Jack and Jill went up the hill",line2:"To fetch a pail of water",line3:"Jack fell down and broke his crown",line4:"And Jill came tumbling after",speak:"Jack and Jill went up the hill, to fetch a pail of water, Jack fell down and broke his crown, and Jill came tumbling after"},
-  {char:"Humpty",emoji:"&#129716;",name:"Humpty Dumpty",line1:"Humpty Dumpty sat on a wall",line2:"Humpty Dumpty had a great fall",line3:"All the king's horses and all the king's men",line4:"Couldn't put Humpty together again",speak:"Humpty Dumpty sat on a wall, Humpty Dumpty had a great fall"},
-  {char:"BINGO",emoji:"&#128021;",name:"BINGO",line1:"There was a farmer had a dog",line2:"And Bingo was his name-o",line3:"B-I-N-G-O B-I-N-G-O B-I-N-G-O",line4:"And Bingo was his name-o!",speak:"There was a farmer had a dog, and Bingo was his name. B I N G O"}
+  {char:"Jack",emoji:"&#127944;",name:"Jack and Jill",line1:"Jack and Jill went up the hill",line2:"To fetch a pail of water",line3:"Jack fell down and broke his crown",line4:"And Jill came tumbling after",speak:"Jack and Jill went up the hill, to fetch a pail of water, Jack fell down and broke his crown"},
+  {char:"Humpty",emoji:"&#129716;",name:"Humpty Dumpty",line1:"Humpty Dumpty sat on a wall",line2:"Humpty Dumpty had a great fall",line3:"All the king's horses and all the king's men",line4:"Couldn't put Humpty together again",speak:"Humpty Dumpty sat on a wall, Humpty Dumpty had a great fall, all the kings horses and all the kings men"},
+  {char:"BINGO",emoji:"&#128021;",name:"BINGO",line1:"There was a farmer had a dog",line2:"And Bingo was his name-o",line3:"B-I-N-G-O B-I-N-G-O",line4:"And Bingo was his name-o!",speak:"There was a farmer had a dog, and Bingo was his name. B I N G O"},
+  {char:"Rain Rain",emoji:"&#127783;",name:"Rain Rain Go Away",line1:"Rain rain go away",line2:"Come again another day",line3:"Little children want to play",line4:"Rain rain go away",speak:"Rain rain go away, come again another day, little children want to play"},
+  {char:"Wheels",emoji:"&#128652;",name:"Wheels on the Bus",line1:"The wheels on the bus go round and round",line2:"Round and round, round and round",line3:"The wheels on the bus go round and round",line4:"All through the town",speak:"The wheels on the bus go round and round, all through the town"}
 ]},
 
-// ══════ MATHS SUBJECT ════════════════════════════════════════════════
-odd_even:{title:"Odd & Even",icon:"&#128290;",color:"c2",hint:"Odd aur Even",type:"items",items:[
-  {char:"1",emoji:"&#49;&#65039;&#8419;",name:"1 - Odd",hindi:"विषम",speak:"One is an odd number"},{char:"2",emoji:"&#50;&#65039;&#8419;",name:"2 - Even",hindi:"सम",speak:"Two is an even number"},
-  {char:"3",emoji:"&#51;&#65039;&#8419;",name:"3 - Odd",hindi:"विषम",speak:"Three is an odd number"},{char:"4",emoji:"&#52;&#65039;&#8419;",name:"4 - Even",hindi:"सम",speak:"Four is an even number"},
-  {char:"5",emoji:"&#53;&#65039;&#8419;",name:"5 - Odd",hindi:"विषम",speak:"Five is an odd number"},{char:"6",emoji:"&#54;&#65039;&#8419;",name:"6 - Even",hindi:"सम",speak:"Six is an even number"},
-  {char:"7",emoji:"&#55;&#65039;&#8419;",name:"7 - Odd",hindi:"विषम",speak:"Seven is an odd number"},{char:"8",emoji:"&#56;&#65039;&#8419;",name:"8 - Even",hindi:"सम",speak:"Eight is an even number"},
-  {char:"9",emoji:"&#57;&#65039;&#8419;",name:"9 - Odd",hindi:"विषम",speak:"Nine is an odd number"},{char:"10",emoji:"&#128287;",name:"10 - Even",hindi:"सम",speak:"Ten is an even number"}
-]},
-
-// ══════ SCIENCE / EVS SUBJECT ═══════════════════════════════════════
-living_nonliving:{title:"Living & Non-living",icon:"&#127807;",color:"c6",hint:"Jeev aur Ajeev",type:"items",items:[
-  {char:"Tree",emoji:"&#127795;",name:"Tree - Living",hindi:"जीवित",speak:"Tree is a living thing"},{char:"Stone",emoji:"&#129704;",name:"Stone - Non-living",hindi:"अजीवित",speak:"Stone is a non-living thing"},
-  {char:"Dog",emoji:"&#128021;",name:"Dog - Living",hindi:"जीवित",speak:"Dog is a living thing"},{char:"Chair",emoji:"&#129681;",name:"Chair - Non-living",hindi:"अजीवित",speak:"Chair is a non-living thing"},
-  {char:"Bird",emoji:"&#128038;",name:"Bird - Living",hindi:"जीवित",speak:"Bird is a living thing"},{char:"Book",emoji:"&#128218;",name:"Book - Non-living",hindi:"अजीवित",speak:"Book is a non-living thing"},
-  {char:"Fish",emoji:"&#128031;",name:"Fish - Living",hindi:"जीवित",speak:"Fish is a living thing"},{char:"Table",emoji:"&#128218;",name:"Table - Non-living",hindi:"अजीवित",speak:"Table is a non-living thing"},
-  {char:"Flower",emoji:"&#127800;",name:"Flower - Living",hindi:"जीवित",speak:"Flower is a living thing"},{char:"Car",emoji:"&#128663;",name:"Car - Non-living",hindi:"अजीवित",speak:"Car is a non-living thing"}
-]},
-our_food:{title:"Our Food",icon:"&#127869;",color:"c6",hint:"Khaane ki cheezein",type:"items",items:[
-  {char:"Rice",emoji:"&#127858;",name:"Rice",hindi:"चावल",speak:"Rice - Chawal"},{char:"Roti",emoji:"&#129360;",name:"Roti",hindi:"रोटी",speak:"Roti"},
-  {char:"Dal",emoji:"&#127858;",name:"Dal",hindi:"दाल",speak:"Dal"},{char:"Milk",emoji:"&#129371;",name:"Milk",hindi:"दूध",speak:"Milk - Doodh"},
-  {char:"Egg",emoji:"&#129370;",name:"Egg",hindi:"अंडा",speak:"Egg - Anda"},{char:"Bread",emoji:"&#127838;",name:"Bread",hindi:"ब्रेड",speak:"Bread"},
-  {char:"Curd",emoji:"&#129367;",name:"Curd",hindi:"दही",speak:"Curd - Dahi"},{char:"Mango",emoji:"&#129389;",name:"Mango",hindi:"आम",speak:"Mango - Aam"},
-  {char:"Banana",emoji:"&#127820;",name:"Banana",hindi:"केला",speak:"Banana - Kela"},{char:"Sabzi",emoji:"&#129382;",name:"Vegetables",hindi:"सब्ज़ी",speak:"Vegetables - Sabzi"}
-]},
-solar_system:{title:"Sun Moon Stars",icon:"&#127775;",color:"c6",hint:"Aasman ki duniya",type:"items",items:[
-  {char:"Sun",emoji:"&#9728;",name:"Sun",hindi:"सूरज",speak:"Sun - Suraj"},{char:"Moon",emoji:"&#127769;",name:"Moon",hindi:"चाँद",speak:"Moon - Chaand"},
-  {char:"Star",emoji:"&#11088;",name:"Star",hindi:"तारा",speak:"Star - Tara"},{char:"Earth",emoji:"&#127758;",name:"Earth",hindi:"पृथ्वी",speak:"Earth - Prithvi"},
-  {char:"Sky",emoji:"&#127780;",name:"Sky",hindi:"आकाश",speak:"Sky - Aakaash"},{char:"Cloud",emoji:"&#9729;",name:"Cloud",hindi:"बादल",speak:"Cloud - Badal"},
-  {char:"Rainbow",emoji:"&#127752;",name:"Rainbow",hindi:"इंद्रधनुष",speak:"Rainbow"},{char:"Lightning",emoji:"&#9889;",name:"Lightning",hindi:"बिजली",speak:"Lightning - Bijli"}
-]},
-water_cycle:{title:"Water",icon:"&#128167;",color:"c6",hint:"Paani ke roop",type:"items",items:[
-  {char:"Rain",emoji:"&#127783;",name:"Rain",hindi:"बारिश",speak:"Rain - Baarish"},{char:"River",emoji:"&#127754;",name:"River",hindi:"नदी",speak:"River - Nadi"},
-  {char:"Sea",emoji:"&#127754;",name:"Sea",hindi:"समुद्र",speak:"Sea - Samudra"},{char:"Cloud",emoji:"&#9729;",name:"Cloud",hindi:"बादल",speak:"Cloud - Badal"},
-  {char:"Snow",emoji:"&#10052;",name:"Snow",hindi:"बर्फ",speak:"Snow - Barf"},{char:"Well",emoji:"&#129695;",name:"Well",hindi:"कुआँ",speak:"Well - Kuaan"},
-  {char:"Lake",emoji:"&#127754;",name:"Lake",hindi:"झील",speak:"Lake - Jheel"},{char:"Tap",emoji:"&#129704;",name:"Tap",hindi:"नल",speak:"Tap - Nal"}
-]},
-good_habits:{title:"Good Habits",icon:"&#129529;",color:"c6",hint:"Achhi aadatein",type:"items",items:[
-  {char:"Brush",emoji:"&#129519;",name:"Brush Teeth",hindi:"दाँत साफ",speak:"Brush your teeth every morning"},{char:"Bath",emoji:"&#128704;",name:"Take Bath",hindi:"नहाना",speak:"Take bath every day"},
-  {char:"Wash",emoji:"&#129704;",name:"Wash Hands",hindi:"हाथ धोना",speak:"Wash your hands before eating"},{char:"Sleep",emoji:"&#128716;",name:"Sleep Early",hindi:"जल्दी सोना",speak:"Sleep early at night"},
-  {char:"Exercise",emoji:"&#127939;",name:"Exercise",hindi:"व्यायाम",speak:"Exercise every morning"},{char:"Read",emoji:"&#128218;",name:"Read Books",hindi:"किताब पढ़ना",speak:"Read books every day"},
-  {char:"Eat",emoji:"&#129379;",name:"Eat Healthy",hindi:"पौष्टिक खाना",speak:"Eat healthy food"},{char:"Share",emoji:"&#129309;",name:"Share",hindi:"बाँटना",speak:"Always share with friends"}
-]},
-
-// ══════ GK / SOCIAL STUDIES ══════════════════════════════════════════
-my_school:{title:"My School",icon:"&#127979;",color:"c9",hint:"School ki cheezein",type:"items",items:[
-  {char:"School",emoji:"&#127979;",name:"School",hindi:"विद्यालय",speak:"School"},{char:"Class",emoji:"&#128101;",name:"Classroom",hindi:"कक्षा",speak:"Classroom"},
-  {char:"Teacher",emoji:"&#128104;",name:"Teacher",hindi:"अध्यापक",speak:"Teacher"},{char:"Book",emoji:"&#128218;",name:"Book",hindi:"किताब",speak:"Book - Kitaab"},
-  {char:"Pen",emoji:"&#128394;",name:"Pen",hindi:"कलम",speak:"Pen - Kalam"},{char:"Pencil",emoji:"&#9999;",name:"Pencil",hindi:"पेंसिल",speak:"Pencil"},
-  {char:"Bag",emoji:"&#127890;",name:"School Bag",hindi:"बस्ता",speak:"School bag"},{char:"Eraser",emoji:"&#129517;",name:"Eraser",hindi:"रबड़",speak:"Eraser"},
-  {char:"Ruler",emoji:"&#128207;",name:"Ruler",hindi:"पट्टी",speak:"Ruler"},{char:"Crayon",emoji:"&#128396;",name:"Crayon",hindi:"क्रेयॉन",speak:"Crayon"}
-]},
-national_symbols:{title:"National Symbols",icon:"&#127470;&#127475;",color:"c9",hint:"Hamare rashtriya chinh",type:"items",items:[
-  {char:"Flag",emoji:"&#127470;&#127475;",name:"National Flag",hindi:"तिरंगा",speak:"Tiranga - Our National Flag. Saffron, white and green with Ashoka Chakra"},
-  {char:"Bird",emoji:"&#129438;",name:"National Bird",hindi:"मोर",speak:"Peacock is our National Bird"},
-  {char:"Animal",emoji:"&#128047;",name:"National Animal",hindi:"बाघ",speak:"Tiger is our National Animal"},
-  {char:"Flower",emoji:"&#127803;",name:"National Flower",hindi:"कमल",speak:"Lotus is our National Flower"},
-  {char:"Fruit",emoji:"&#129389;",name:"National Fruit",hindi:"आम",speak:"Mango is our National Fruit"},
-  {char:"Sport",emoji:"&#127944;",name:"National Sport",hindi:"हॉकी",speak:"Hockey is our National Sport"},
-  {char:"River",emoji:"&#127754;",name:"National River",hindi:"गंगा",speak:"Ganga is our National River"},
-  {char:"Anthem",emoji:"&#127908;",name:"National Anthem",hindi:"जन गण मन",speak:"Jana Gana Mana is our National Anthem"}
-]},
-community_helpers:{title:"Community Helpers",icon:"&#128106;",color:"c9",hint:"Hamare sevak",type:"items",items:[
-  {char:"Doctor",emoji:"&#129657;",name:"Doctor",hindi:"डॉक्टर",speak:"Doctor helps sick people"},{char:"Teacher",emoji:"&#128104;",name:"Teacher",hindi:"अध्यापक",speak:"Teacher teaches children"},
-  {char:"Police",emoji:"&#128110;",name:"Police",hindi:"पुलिस",speak:"Police keeps us safe"},{char:"Farmer",emoji:"&#128019;",name:"Farmer",hindi:"किसान",speak:"Farmer grows our food"},
-  {char:"Driver",emoji:"&#128663;",name:"Driver",hindi:"चालक",speak:"Driver drives vehicles"},{char:"Chef",emoji:"&#129379;",name:"Chef",hindi:"रसोइया",speak:"Chef cooks food"},
-  {char:"Firefighter",emoji:"&#128657;",name:"Firefighter",hindi:"अग्निशमक",speak:"Firefighter puts out fires"},{char:"Postman",emoji:"&#128140;",name:"Postman",hindi:"डाकिया",speak:"Postman delivers letters"}
-]},
-
-// ══════ BRAINSTORMING SECTION ════════════════════════════════════════
 brain_sorting:{title:"Sort It!",icon:"&#129504;",color:"c13",hint:"Cheezein sort karo",type:"brainstorm_sort",
   categories:["Fruit","Animal","Vehicle","Color"],
   items:[
@@ -1312,6 +1494,7 @@ brain_sorting:{title:"Sort It!",icon:"&#129504;",color:"c13",hint:"Cheezein sort
     {name:"Plane",category:"Vehicle",emoji:"&#9992;"},{name:"Yellow",category:"Color",emoji:"&#128993;"}
   ]
 },
+
 brain_patterns:{title:"Complete Pattern",icon:"&#127922;",color:"c13",hint:"Pattern complete karo",type:"brainstorm_pattern",items:[
   {pattern:["&#127822;","&#127820;","&#127822;","&#127820;","?"],answer:"&#127822;",options:["&#127822;","&#128049;","&#127815;","&#128021;"],hint:"Apple Banana Apple Banana Apple"},
   {pattern:["&#128308;","&#128309;","&#128994;","&#128308;","&#128309;","?"],answer:"&#128994;",options:["&#128993;","&#128994;","&#128308;","&#129505;"],hint:"Red Blue Green Red Blue Green"},
@@ -1320,13 +1503,176 @@ brain_patterns:{title:"Complete Pattern",icon:"&#127922;",color:"c13",hint:"Patt
   {pattern:["&#128021;","&#128021;","&#128049;","&#128021;","&#128021;","?"],answer:"&#128049;",options:["&#128021;","&#128049;","&#128016;","&#128018;"],hint:"Dog Dog Cat Dog Dog Cat"},
   {pattern:["2","4","6","8","?"],answer:"10",options:["9","10","11","12"],hint:"2 4 6 8 Ten"}
 ]},
+
 brain_whatsmissing:{title:"What's Missing?",icon:"&#10067;",color:"c13",hint:"Kya ghayab hai?",type:"brainstorm_missing",sets:[
   {title:"Days of Week",emoji:"&#128197;",items:["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],missing:["Thursday","Saturday"]},
   {title:"Fruits",emoji:"&#127822;",items:["Apple","Mango","Banana","Grapes","Orange","Lemon"],missing:["Banana","Lemon"]},
   {title:"Numbers 1-10",emoji:"&#128290;",items:["1","2","3","4","5","6","7","8","9","10"],missing:["3","7","9"]},
   {title:"Colors",emoji:"&#127912;",items:["Red","Blue","Green","Yellow","Orange","Purple"],missing:["Green","Purple"]},
   {title:"Months",emoji:"&#128198;",items:["January","February","March","April","May","June","July","August","September","October","November","December"],missing:["April","August","October"]}
+]},
+
+small_abc:{title:"Small Letters a-z",icon:"&#97;",color:"c1",hint:"Lowercase letters",type:"items",items:[
+  {char:"a",emoji:"&#127822;",name:"apple",hindi:"सेब",speak:"a for apple"},{char:"b",emoji:"&#129731;",name:"ball",hindi:"गेंद",speak:"b for ball"},
+  {char:"c",emoji:"&#128049;",name:"cat",hindi:"बिल्ली",speak:"c for cat"},{char:"d",emoji:"&#128021;",name:"dog",hindi:"कुत्ता",speak:"d for dog"},
+  {char:"e",emoji:"&#128024;",name:"elephant",hindi:"हाथी",speak:"e for elephant"},{char:"f",emoji:"&#128031;",name:"fish",hindi:"मछली",speak:"f for fish"},
+  {char:"g",emoji:"&#128016;",name:"goat",hindi:"बकरी",speak:"g for goat"},{char:"h",emoji:"&#128052;",name:"horse",hindi:"घोड़ा",speak:"h for horse"},
+  {char:"i",emoji:"&#127846;",name:"ice cream",hindi:"आइस क्रीम",speak:"i for ice cream"},{char:"j",emoji:"&#128057;",name:"jaguar",hindi:"जैगुआर",speak:"j for jaguar"},
+  {char:"k",emoji:"&#129413;",name:"kite",hindi:"पतंग",speak:"k for kite"},{char:"l",emoji:"&#129409;",name:"lion",hindi:"शेर",speak:"l for lion"},
+  {char:"m",emoji:"&#128018;",name:"monkey",hindi:"बंदर",speak:"m for monkey"},{char:"n",emoji:"&#127981;",name:"nest",hindi:"घोंसला",speak:"n for nest"},
+  {char:"o",emoji:"&#128025;",name:"octopus",hindi:"ऑक्टोपस",speak:"o for octopus"},{char:"p",emoji:"&#129438;",name:"peacock",hindi:"मोर",speak:"p for peacock"},
+  {char:"q",emoji:"&#128120;",name:"queen",hindi:"रानी",speak:"q for queen"},{char:"r",emoji:"&#127752;",name:"rainbow",hindi:"इंद्रधनुष",speak:"r for rainbow"},
+  {char:"s",emoji:"&#128013;",name:"snake",hindi:"साँप",speak:"s for snake"},{char:"t",emoji:"&#128047;",name:"tiger",hindi:"बाघ",speak:"t for tiger"},
+  {char:"u",emoji:"&#9730;",name:"umbrella",hindi:"छतरी",speak:"u for umbrella"},{char:"v",emoji:"&#127931;",name:"violin",hindi:"वायलिन",speak:"v for violin"},
+  {char:"w",emoji:"&#128051;",name:"whale",hindi:"व्हेल",speak:"w for whale"},{char:"x",emoji:"&#127928;",name:"xylophone",hindi:"जाइलोफोन",speak:"x for xylophone"},
+  {char:"y",emoji:"&#129360;",name:"yak",hindi:"याक",speak:"y for yak"},{char:"z",emoji:"&#129427;",name:"zebra",hindi:"ज़ेब्रा",speak:"z for zebra"}
+]},
+
+two_letter_words:{title:"2-Letter Words",icon:"&#128216;",color:"c1",hint:"Simple words",type:"items",items:[
+  {char:"am",emoji:"&#128104;",name:"am",hindi:"हूँ",speak:"am"},{char:"is",emoji:"&#128105;",name:"is",hindi:"है",speak:"is"},
+  {char:"at",emoji:"&#127968;",name:"at",hindi:"पर",speak:"at"},{char:"an",emoji:"&#128100;",name:"an",hindi:"एक",speak:"an"},
+  {char:"on",emoji:"&#128218;",name:"on",hindi:"पर",speak:"on"},{char:"in",emoji:"&#128194;",name:"in",hindi:"में",speak:"in"},
+  {char:"up",emoji:"&#11014;",name:"up",hindi:"ऊपर",speak:"up"},{char:"go",emoji:"&#128099;",name:"go",hindi:"जाओ",speak:"go"},
+  {char:"no",emoji:"&#128683;",name:"no",hindi:"नहीं",speak:"no"},{char:"do",emoji:"&#9989;",name:"do",hindi:"करो",speak:"do"},
+  {char:"we",emoji:"&#128106;",name:"we",hindi:"हम",speak:"we"},{char:"me",emoji:"&#128104;",name:"me",hindi:"मैं",speak:"me"}
+]},
+
+three_letter_words:{title:"3-Letter Words",icon:"&#128217;",color:"c1",hint:"CVC words",type:"items",items:[
+  {char:"cat",emoji:"&#128049;",name:"cat",hindi:"बिल्ली",speak:"cat"},{char:"dog",emoji:"&#128021;",name:"dog",hindi:"कुत्ता",speak:"dog"},
+  {char:"hat",emoji:"&#127913;",name:"hat",hindi:"टोपी",speak:"hat"},{char:"bat",emoji:"&#129415;",name:"bat",hindi:"बल्ला",speak:"bat"},
+  {char:"mat",emoji:"&#129518;",name:"mat",hindi:"चटाई",speak:"mat"},{char:"rat",emoji:"&#128001;",name:"rat",hindi:"चूहा",speak:"rat"},
+  {char:"hen",emoji:"&#128020;",name:"hen",hindi:"मुर्गी",speak:"hen"},{char:"pen",emoji:"&#128394;",name:"pen",hindi:"कलम",speak:"pen"},
+  {char:"ten",emoji:"&#128287;",name:"ten",hindi:"दस",speak:"ten"},{char:"cup",emoji:"&#9749;",name:"cup",hindi:"कप",speak:"cup"},
+  {char:"sun",emoji:"&#9728;",name:"sun",hindi:"सूरज",speak:"sun"},{char:"bus",emoji:"&#128652;",name:"bus",hindi:"बस",speak:"bus"},
+  {char:"bed",emoji:"&#128716;",name:"bed",hindi:"बिस्तर",speak:"bed"},{char:"red",emoji:"&#128308;",name:"red",hindi:"लाल",speak:"red"},
+  {char:"top",emoji:"&#129529;",name:"top",hindi:"टॉप",speak:"top"},{char:"pot",emoji:"&#127859;",name:"pot",hindi:"बर्तन",speak:"pot"}
+]},
+
+hindi_2letter:{title:"Hindi 2-Letter Words",icon:"&#2325;&#2348;",color:"c4",hint:"Do akshar ke shabd",type:"items",items:[
+  {char:"कब",emoji:"&#128336;",name:"Kab",hindi:"कब",speak:"Kab - when"},{char:"जल",emoji:"&#128167;",name:"Jal",hindi:"जल",speak:"Jal - water"},
+  {char:"नल",emoji:"&#129704;",name:"Nal",hindi:"नल",speak:"Nal - tap"},{char:"फल",emoji:"&#127822;",name:"Phal",hindi:"फल",speak:"Phal - fruit"},
+  {char:"कल",emoji:"&#128197;",name:"Kal",hindi:"कल",speak:"Kal - yesterday or tomorrow"},{char:"मन",emoji:"&#129504;",name:"Man",hindi:"मन",speak:"Man - mind"},
+  {char:"वन",emoji:"&#127795;",name:"Van",hindi:"वन",speak:"Van - forest"},{char:"धन",emoji:"&#128176;",name:"Dhan",hindi:"धन",speak:"Dhan - wealth"},
+  {char:"पल",emoji:"&#9200;",name:"Pal",hindi:"पल",speak:"Pal - moment"},{char:"बल",emoji:"&#128170;",name:"Bal",hindi:"बल",speak:"Bal - strength"},
+  {char:"रस",emoji:"&#129381;",name:"Ras",hindi:"रस",speak:"Ras - juice"},{char:"घर",emoji:"&#127968;",name:"Ghar",hindi:"घर",speak:"Ghar - home"}
+]},
+
+odd_even:{title:"Odd & Even",icon:"&#128290;",color:"c2",hint:"Odd aur Even",type:"items",items:[
+  {char:"1",emoji:"&#49;&#65039;&#8419;",name:"1 - Odd",hindi:"विषम",speak:"One is an odd number. Odd numbers cannot be divided equally into two groups"},
+  {char:"2",emoji:"&#50;&#65039;&#8419;",name:"2 - Even",hindi:"सम",speak:"Two is an even number. Even numbers can be divided equally into two groups"},
+  {char:"3",emoji:"&#51;&#65039;&#8419;",name:"3 - Odd",hindi:"विषम",speak:"Three is an odd number"},
+  {char:"4",emoji:"&#52;&#65039;&#8419;",name:"4 - Even",hindi:"सम",speak:"Four is an even number"},
+  {char:"5",emoji:"&#53;&#65039;&#8419;",name:"5 - Odd",hindi:"विषम",speak:"Five is an odd number"},
+  {char:"6",emoji:"&#54;&#65039;&#8419;",name:"6 - Even",hindi:"सम",speak:"Six is an even number"},
+  {char:"7",emoji:"&#55;&#65039;&#8419;",name:"7 - Odd",hindi:"विषम",speak:"Seven is an odd number"},
+  {char:"8",emoji:"&#56;&#65039;&#8419;",name:"8 - Even",hindi:"सम",speak:"Eight is an even number"},
+  {char:"9",emoji:"&#57;&#65039;&#8419;",name:"9 - Odd",hindi:"विषम",speak:"Nine is an odd number"},
+  {char:"10",emoji:"&#128287;",name:"10 - Even",hindi:"सम",speak:"Ten is an even number"}
+]},
+
+good_habits:{title:"Good Habits",icon:"&#129529;",color:"c6",hint:"Achhi aadatein",type:"items",items:[
+  {char:"Brush",emoji:"&#129519;",name:"Brush Teeth",hindi:"दाँत साफ करो",speak:"Brush your teeth every morning and night"},
+  {char:"Bath",emoji:"&#128704;",name:"Take Bath",hindi:"रोज़ नहाओ",speak:"Take bath every day to stay clean and healthy"},
+  {char:"Wash",emoji:"&#129704;",name:"Wash Hands",hindi:"हाथ धोओ",speak:"Wash your hands before eating and after using the toilet"},
+  {char:"Sleep",emoji:"&#128716;",name:"Sleep Early",hindi:"जल्दी सोओ",speak:"Sleep early at night and wake up early in the morning"},
+  {char:"Exercise",emoji:"&#127939;",name:"Exercise",hindi:"व्यायाम करो",speak:"Exercise every morning to keep your body fit and strong"},
+  {char:"Read",emoji:"&#128218;",name:"Read Books",hindi:"किताब पढ़ो",speak:"Read books every day to learn new things"},
+  {char:"Eat",emoji:"&#129379;",name:"Eat Healthy",hindi:"पौष्टिक खाओ",speak:"Eat healthy food like fruits and vegetables every day"},
+  {char:"Share",emoji:"&#129309;",name:"Share",hindi:"बाँटो",speak:"Always share with your friends and family"}
+]},
+
+community_helpers:{title:"Community Helpers",icon:"&#128106;",color:"c9",hint:"Hamare sevak",type:"items",items:[
+  {char:"Doctor",emoji:"&#129657;",name:"Doctor",hindi:"डॉक्टर",speak:"Doctor treats sick people and helps them get better"},
+  {char:"Teacher",emoji:"&#128104;",name:"Teacher",hindi:"अध्यापक",speak:"Teacher teaches children and helps them learn"},
+  {char:"Police",emoji:"&#128110;",name:"Police Officer",hindi:"पुलिस",speak:"Police officer keeps us safe and maintains law and order"},
+  {char:"Farmer",emoji:"&#128019;",name:"Farmer",hindi:"किसान",speak:"Farmer grows food for all of us. Farmers are very important"},
+  {char:"Driver",emoji:"&#128663;",name:"Driver",hindi:"चालक",speak:"Driver drives buses, cars and trucks to take us places"},
+  {char:"Chef",emoji:"&#129379;",name:"Chef",hindi:"रसोइया",speak:"Chef cooks delicious food for us in restaurants and hotels"},
+  {char:"Firefighter",emoji:"&#128657;",name:"Firefighter",hindi:"अग्निशमक",speak:"Firefighter puts out fires and rescues people from danger"},
+  {char:"Postman",emoji:"&#128140;",name:"Postman",hindi:"डाकिया",speak:"Postman delivers letters and packages to our homes"}
+]},
+
+water_cycle:{title:"Water",icon:"&#128167;",color:"c6",hint:"Paani ke roop",type:"items",items:[
+  {char:"Rain",emoji:"&#127783;",name:"Rain",hindi:"बारिश",speak:"Rain falls from clouds. Rainwater fills rivers and lakes"},
+  {char:"River",emoji:"&#127754;",name:"River",hindi:"नदी",speak:"River is a large flowing body of water"},
+  {char:"Sea",emoji:"&#127754;",name:"Sea",hindi:"समुद्र",speak:"Sea is a large body of salt water"},
+  {char:"Cloud",emoji:"&#9729;",name:"Cloud",hindi:"बादल",speak:"Clouds are made of tiny water droplets in the sky"},
+  {char:"Snow",emoji:"&#10052;",name:"Snow",hindi:"बर्फ",speak:"Snow is frozen water that falls in cold weather"},
+  {char:"Well",emoji:"&#129695;",name:"Well",hindi:"कुआँ",speak:"Well is a deep hole dug to get water from underground"},
+  {char:"Lake",emoji:"&#127754;",name:"Lake",hindi:"झील",speak:"Lake is a large area of still water surrounded by land"},
+  {char:"Tap",emoji:"&#129704;",name:"Tap",hindi:"नल",speak:"Tap brings clean water to our homes for drinking and washing"}
+]},
+
+sentences_class1:{title:"Simple Sentences",icon:"&#128172;",color:"c1",hint:"Simple English sentences",type:"items",items:[
+  {char:"This is",emoji:"&#128049;",name:"This is a cat.",hindi:"यह एक बिल्ली है।",speak:"This is a cat"},{char:"I see",emoji:"&#128064;",name:"I see a dog.",hindi:"मैं एक कुत्ता देखता हूँ।",speak:"I see a dog"},
+  {char:"The sun",emoji:"&#9728;",name:"The sun is bright.",hindi:"सूरज चमकता है।",speak:"The sun is bright"},{char:"I eat",emoji:"&#129379;",name:"I eat an apple.",hindi:"मैं एक सेब खाता हूँ।",speak:"I eat an apple"},
+  {char:"She is",emoji:"&#128105;",name:"She is my mother.",hindi:"वह मेरी माँ है।",speak:"She is my mother"},{char:"We play",emoji:"&#128106;",name:"We play in the park.",hindi:"हम पार्क में खेलते हैं।",speak:"We play in the park"},
+  {char:"The bird",emoji:"&#128038;",name:"The bird can fly.",hindi:"पक्षी उड़ सकता है।",speak:"The bird can fly"},{char:"I go",emoji:"&#127979;",name:"I go to school.",hindi:"मैं स्कूल जाता हूँ।",speak:"I go to school"},
+  {char:"This is a",emoji:"&#127822;",name:"This is a mango.",hindi:"यह एक आम है।",speak:"This is a mango"},{char:"My name",emoji:"&#128100;",name:"My name is Ravi.",hindi:"मेरा नाम रवि है।",speak:"My name is Ravi"}
+]},
+
+hindi_words_class1:{title:"Hindi Words",icon:"&#2360;&#2348;&#2381;&#2342;",color:"c4",hint:"Hindi ke shabd",type:"items",items:[
+  {char:"पानी",emoji:"&#128167;",name:"Paani",hindi:"पानी",speak:"Paani - water"},{char:"खाना",emoji:"&#127869;",name:"Khaana",hindi:"खाना",speak:"Khaana - food"},
+  {char:"माँ",emoji:"&#128105;",name:"Maa",hindi:"माँ",speak:"Maa - mother"},{char:"घर",emoji:"&#127968;",name:"Ghar",hindi:"घर",speak:"Ghar - house"},
+  {char:"बच्चा",emoji:"&#128118;",name:"Bachcha",hindi:"बच्चा",speak:"Bachcha - child"},{char:"आकाश",emoji:"&#127780;",name:"Aakaash",hindi:"आकाश",speak:"Aakaash - sky"},
+  {char:"फूल",emoji:"&#127800;",name:"Phool",hindi:"फूल",speak:"Phool - flower"},{char:"पेड़",emoji:"&#127795;",name:"Ped",hindi:"पेड़",speak:"Ped - tree"},
+  {char:"नदी",emoji:"&#127754;",name:"Nadi",hindi:"नदी",speak:"Nadi - river"},{char:"रात",emoji:"&#127769;",name:"Raat",hindi:"रात",speak:"Raat - night"},
+  {char:"दिन",emoji:"&#9728;",name:"Din",hindi:"दिन",speak:"Din - day"},{char:"सड़क",emoji:"&#128663;",name:"Sadak",hindi:"सड़क",speak:"Sadak - road"}
+]},
+
+my_school:{title:"My School",icon:"&#127979;",color:"c9",hint:"School ki cheezein",type:"items",items:[
+  {char:"School",emoji:"&#127979;",name:"School",hindi:"विद्यालय",speak:"School is the place where we learn and study"},
+  {char:"Class",emoji:"&#128101;",name:"Classroom",hindi:"कक्षा",speak:"Classroom is where the teacher teaches us"},
+  {char:"Teacher",emoji:"&#128104;",name:"Teacher",hindi:"अध्यापक",speak:"Teacher is our guide who helps us learn"},
+  {char:"Book",emoji:"&#128218;",name:"Book",hindi:"किताब",speak:"Book contains lessons and stories for us to read"},
+  {char:"Pen",emoji:"&#128394;",name:"Pen",hindi:"कलम",speak:"Pen is used to write on paper"},
+  {char:"Pencil",emoji:"&#9999;",name:"Pencil",hindi:"पेंसिल",speak:"Pencil is used to write and draw"},
+  {char:"Bag",emoji:"&#127890;",name:"School Bag",hindi:"बस्ता",speak:"We carry our books and stationery in a school bag"},
+  {char:"Eraser",emoji:"&#129517;",name:"Eraser",hindi:"रबड़",speak:"Eraser is used to remove pencil marks"},
+  {char:"Ruler",emoji:"&#128207;",name:"Ruler",hindi:"पट्टी",speak:"Ruler is used to draw straight lines and measure"},
+  {char:"Crayon",emoji:"&#128396;",name:"Crayon",hindi:"क्रेयॉन",speak:"Crayon is used to color drawings with bright colors"}
+]},
+
+our_food:{title:"Our Food",icon:"&#127869;",color:"c6",hint:"Khaane ki cheezein",type:"items",items:[
+  {char:"Rice",emoji:"&#127858;",name:"Rice",hindi:"चावल",speak:"Rice - Chawal. Rice is a staple food in India"},{char:"Roti",emoji:"&#129360;",name:"Roti",hindi:"रोटी",speak:"Roti is Indian flatbread made of wheat flour"},
+  {char:"Dal",emoji:"&#127858;",name:"Dal",hindi:"दाल",speak:"Dal is lentil soup full of protein"},{char:"Milk",emoji:"&#129371;",name:"Milk",hindi:"दूध",speak:"Milk gives us calcium and makes our bones strong"},
+  {char:"Egg",emoji:"&#129370;",name:"Egg",hindi:"अंडा",speak:"Egg gives us protein. It is a healthy food"},{char:"Bread",emoji:"&#127838;",name:"Bread",hindi:"ब्रेड",speak:"Bread is made of wheat and gives us energy"},
+  {char:"Curd",emoji:"&#129367;",name:"Curd",hindi:"दही",speak:"Curd is good for digestion and health"},{char:"Mango",emoji:"&#129389;",name:"Mango",hindi:"आम",speak:"Mango is the king of fruits and national fruit of India"},
+  {char:"Banana",emoji:"&#127820;",name:"Banana",hindi:"केला",speak:"Banana gives us energy and is easy to digest"},{char:"Sabzi",emoji:"&#129382;",name:"Vegetables",hindi:"सब्ज़ी",speak:"Vegetables are full of vitamins and minerals for health"}
+]},
+
+national_symbols:{title:"National Symbols",icon:"&#127470;&#127475;",color:"c9",hint:"Hamare rashtriya chinh",type:"items",items:[
+  {char:"Flag",emoji:"&#127470;&#127475;",name:"National Flag",hindi:"तिरंगा",speak:"Tiranga is our National Flag. It has three colours. Saffron, white and green. The Ashoka Chakra is in the middle"},
+  {char:"Bird",emoji:"&#129438;",name:"National Bird - Peacock",hindi:"राष्ट्रीय पक्षी - मोर",speak:"Peacock is our National Bird. It has beautiful colorful feathers"},
+  {char:"Animal",emoji:"&#128047;",name:"National Animal - Tiger",hindi:"राष्ट्रीय पशु - बाघ",speak:"Tiger is our National Animal. It is strong and brave"},
+  {char:"Flower",emoji:"&#127803;",name:"National Flower - Lotus",hindi:"राष्ट्रीय फूल - कमल",speak:"Lotus is our National Flower. It grows in water and is very beautiful"},
+  {char:"Fruit",emoji:"&#129389;",name:"National Fruit - Mango",hindi:"राष्ट्रीय फल - आम",speak:"Mango is our National Fruit. India grows the most mangoes in the world"},
+  {char:"Sport",emoji:"&#127944;",name:"National Sport - Hockey",hindi:"राष्ट्रीय खेल - हॉकी",speak:"Hockey is our National Sport. India has won many Olympic gold medals in hockey"},
+  {char:"River",emoji:"&#127754;",name:"National River - Ganga",hindi:"राष्ट्रीय नदी - गंगा",speak:"Ganga is our National River. It is the longest river in India"},
+  {char:"Anthem",emoji:"&#127908;",name:"National Anthem - Jana Gana Mana",hindi:"राष्ट्रगान - जन गण मन",speak:"Jana Gana Mana is our National Anthem. It was written by Rabindranath Tagore"}
+]},
+
+gk_class1:{title:"GK - Class 1",icon:"&#127775;",color:"c9",hint:"Basic GK",type:"items",items:[
+  {char:"India",emoji:"&#127470;&#127475;",name:"India",hindi:"भारत",speak:"India is our country. Its capital is New Delhi"},{char:"Delhi",emoji:"&#127968;",name:"New Delhi",hindi:"नई दिल्ली",speak:"New Delhi is the capital of India"},
+  {char:"Hindi",emoji:"&#2361;&#2367;",name:"Hindi",hindi:"हिंदी",speak:"Hindi is the national language of India"},{char:"PM",emoji:"&#128104;",name:"Prime Minister",hindi:"प्रधानमंत्री",speak:"Prime Minister is the head of the government of India"},
+  {char:"Cow",emoji:"&#128004;",name:"National Animal of India used to be Cow",hindi:"राष्ट्रीय पशु",speak:"Tiger is the national animal of India"},{char:"Flag",emoji:"&#127470;&#127475;",name:"India Flag Colors",hindi:"तिरंगा",speak:"Indian flag has three colors. Saffron, white, and green"},
+  {char:"Sun",emoji:"&#9728;",name:"Sun rises in East",hindi:"सूर्य पूर्व में उगता है",speak:"The sun rises in the east and sets in the west"},{char:"Water",emoji:"&#128167;",name:"Water Formula",hindi:"पानी",speak:"We should save water. Water is very precious"},
+  {char:"1 Week",emoji:"&#128197;",name:"7 Days in a Week",hindi:"हफ्ते में 7 दिन",speak:"There are seven days in a week"},{char:"1 Year",emoji:"&#128198;",name:"12 Months in a Year",hindi:"साल में 12 महीने",speak:"There are twelve months in a year"}
+]},
+
+living_nonliving:{title:"Living & Non-living",icon:"&#127807;",color:"c6",hint:"Jeev aur Ajeev",type:"items",items:[
+  {char:"Tree",emoji:"&#127795;",name:"Tree - Living",hindi:"जीवित",speak:"Tree is a living thing. It grows, breathes and needs food and water"},
+  {char:"Stone",emoji:"&#129704;",name:"Stone - Non-living",hindi:"अजीवित",speak:"Stone is a non-living thing. It does not grow or breathe"},
+  {char:"Dog",emoji:"&#128021;",name:"Dog - Living",hindi:"जीवित",speak:"Dog is a living thing. It eats, breathes and grows"},
+  {char:"Chair",emoji:"&#129681;",name:"Chair - Non-living",hindi:"अजीवित",speak:"Chair is a non-living thing. It cannot move or grow by itself"},
+  {char:"Bird",emoji:"&#128038;",name:"Bird - Living",hindi:"जीवित",speak:"Bird is a living thing. It breathes, eats and can fly"},
+  {char:"Book",emoji:"&#128218;",name:"Book - Non-living",hindi:"अजीवित",speak:"Book is a non-living thing. It cannot eat, breathe or grow"},
+  {char:"Fish",emoji:"&#128031;",name:"Fish - Living",hindi:"जीवित",speak:"Fish is a living thing. It lives in water and breathes through gills"},
+  {char:"Table",emoji:"&#128218;",name:"Table - Non-living",hindi:"अजीवित",speak:"Table is a non-living thing made of wood or metal"},
+  {char:"Flower",emoji:"&#127800;",name:"Flower - Living",hindi:"जीवित",speak:"Flower is a living thing. It grows from a plant and needs sunlight"},
+  {char:"Car",emoji:"&#128663;",name:"Car - Non-living",hindi:"अजीवित",speak:"Car is a non-living thing. It needs fuel to move but cannot grow"}
 ]}
+
 };
 
 var stars=0,currentCat=null,currentDetail=null,quizItems=[],quizIdx=0,quizRight=0,learned={},currentTable=2;
@@ -1441,7 +1787,7 @@ function speakItem(item,catKey){
     var mletters=item.spell.replace(/-/g,', ');
     p.push(u(mletters+'.',false,0.68,P));
     p.push(u(item.name+'.',false,R2,P));
-  } else if(catKey==='body_parts'||catKey==='family'||catKey==='vehicles'||catKey==='birds'||catKey==='flowers'||catKey==='seasons'||catKey==='small_abc'||catKey==='two_letter_words'||catKey==='three_letter_words'||catKey==='my_school'||catKey==='community_helpers'||catKey==='our_food'||catKey==='water_cycle'||catKey==='solar_system'||catKey==='good_habits'||catKey==='living_nonliving'||catKey==='odd_even'||catKey==='national_symbols'){
+  } else if(catKey==='body_parts'||catKey==='family'||catKey==='vehicles'||catKey==='birds'||catKey==='flowers'||catKey==='seasons'||catKey==='small_abc'||catKey==='two_letter_words'||catKey==='three_letter_words'||catKey==='my_school'||catKey==='community_helpers'||catKey==='our_food'||catKey==='water_cycle'||catKey==='solar_system'||catKey==='good_habits'||catKey==='living_nonliving'||catKey==='odd_even'||catKey==='national_symbols'||catKey==='hindi_2letter'||catKey==='hindi_words_class1'||catKey==='sentences_class1'||catKey==='gk_class1'||catKey==='nouns_verbs'||catKey==='grammar_noun'||catKey==='grammar_verb'||catKey==='tenses_basic'||catKey==='plants'||catKey==='safety_rules'||catKey==='gk_india'||catKey==='festivals'||catKey==='human_body'||catKey==='weather'||catKey==='transport_comm'||catKey==='phonics'||catKey==='picture_words'||catKey==='vowel_words'||catKey==='sight_words'||catKey==='sentences_basic'||catKey==='counting_objects'||catKey==='big_small'||catKey==='before_after'||catKey==='money_basics'||catKey==='time_money'||catKey==='division_basic'||catKey==='paragraph_writing'||catKey==='reading_comp'||catKey==='hindi_matra_aa'||catKey==='hindi_matra_i'||catKey==='hindi_matra_all'||catKey==='hindi_sentences'||catKey==='hindi_essay'){
     p.push(u(item.name+'.',false,R,P));
     p.push(u(item.name+', matlab, '+(item.speak||item.name)+'.',false,R2,P));
   } else if(catKey==='simple_maths'){
@@ -1488,30 +1834,112 @@ window.addEventListener('load',function(){
   document.getElementById('speakBtn').addEventListener('click',function(){if(currentDetail)speakItem(currentDetail.item,currentDetail.catKey);});
 });
 
-var SUBJECTS=[
-  {label:'📗 English',color:'#FF4757',keys:['english_abc','small_abc','two_letter_words','three_letter_words','rhymes','opposites']},
-  {label:'📘 Hindi',color:'#A55EEA',keys:['hindi_swar','hindi_vyanjan']},
-  {label:'📙 Maths',color:'#1E90FF',keys:['numbers','spelling','simple_maths','odd_even','tables','shapes']},
-  {label:'🔬 Science / EVS',color:'#2ED573',keys:['living_nonliving','our_food','solar_system','water_cycle','good_habits','body_parts','seasons']},
-  {label:'🌍 GK / Social',color:'#FF6B35',keys:['family','community_helpers','national_symbols','my_school','vehicles','birds','flowers','fruits','animals','colors','vegetables','days','months']},
-  {label:'🧠 Brainstorming',color:'#9B59B6',keys:['brain_sorting','brain_patterns','brain_whatsmissing']}
+// ══════════════════════════════════════════════════════════════════════
+// CLASS-WISE CURRICULUM  (Nursery → Class 2)
+// ══════════════════════════════════════════════════════════════════════
+var CLASSES=[
+  {
+    id:'nursery', label:'🌱 Nursery', age:'Age 3–4', color:'#FF6B9D',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['english_abc','phonics','rhymes','picture_words']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_rhymes']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','shapes','counting_objects','big_small']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['body_parts','family','fruits','vegetables','animals','birds','colors']},
+      {label:'🎨 Activity',  color:'#FF6B35', keys:['brain_sorting','brain_patterns']}
+    ]
+  },
+  {
+    id:'lkg', label:'🌼 LKG', age:'Lower KG', color:'#FF8C00',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['english_abc','small_abc','two_letter_words','vowel_words','rhymes']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_2letter']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','shapes','odd_even','before_after','simple_maths']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['seasons','vehicles','good_habits','plants','flowers']},
+      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing']}
+    ]
+  },
+  {
+    id:'ukg', label:'🌻 UKG', age:'Upper KG', color:'#2ED573',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['english_abc','small_abc','three_letter_words','sight_words','sentences_basic']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_aa','hindi_2letter']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','odd_even','tables','shapes']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['community_helpers','festivals','animals','water_cycle','good_habits']},
+      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
+    ]
+  },
+  {
+    id:'class1', label:'📚 Class 1', age:'Age 6–7', color:'#1E90FF',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['english_abc','three_letter_words','nouns_verbs','sentences_class1','rhymes','spelling']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_aa','hindi_matra_i','hindi_words_class1']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','spelling','tables','shapes','money_basics']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['my_school','our_food','plants','animals','safety_rules','body_parts']},
+      {label:'📖 GK',        color:'#FF6B35', keys:['national_symbols','days','months','gk_class1']},
+      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
+    ]
+  },
+  {
+    id:'class2', label:'📗 Class 2', age:'Age 7–8', color:'#A55EEA',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['grammar_noun','grammar_verb','tenses_basic','paragraph_writing','reading_comp']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_all','hindi_sentences','hindi_essay']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','tables','division_basic','time_money','shapes']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['human_body','weather','transport_comm','plants','living_nonliving','water_cycle']},
+      {label:'📖 GK',        color:'#FF6B35', keys:['national_symbols','gk_india','community_helpers','festivals']},
+      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
+    ]
+  }
 ];
 
+var currentClass='nursery';
+
 function buildCats(){
+  // Build class tab row
+  var tabRow=document.getElementById('classTabsRow');
+  tabRow.innerHTML='';
+  CLASSES.forEach(function(cls){
+    var btn=document.createElement('button');
+    btn.style.cssText='flex-shrink:0;border:none;border-radius:50px;padding:8px 14px;'
+      +'font-family:Fredoka One,cursive;font-size:clamp(12px,3.5vw,14px);cursor:pointer;'
+      +'transition:all .2s;white-space:nowrap;'
+      +(currentClass===cls.id
+        ? 'background:'+cls.color+';color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.2);transform:scale(1.05);'
+        : 'background:#fff;color:var(--mid);border:2px solid #eee;');
+    btn.innerHTML=cls.label;
+    btn.addEventListener('click',function(){
+      currentClass=cls.id; buildCats();
+    });
+    tabRow.appendChild(btn);
+  });
+
+  // Build subject grid for selected class
+  var cls=CLASSES.find(function(c){return c.id===currentClass;});
   var g=document.getElementById('catGrid');
   g.innerHTML='';
-  SUBJECTS.forEach(function(subj){
-    // Section header
+
+  // Class info banner row
+  var info=document.createElement('div');
+  info.style.cssText='font-family:Fredoka One,cursive;font-size:clamp(13px,3.8vw,15px);'
+    +'color:#fff;background:'+cls.color+';border-radius:14px;padding:9px 14px;'
+    +'box-shadow:0 3px 12px rgba(0,0,0,.15);display:flex;align-items:center;gap:8px;';
+  info.innerHTML='<span style="font-size:22px">'+cls.label.split(' ')[0]+'</span>'
+    +'<span>'+cls.label.replace(/^[^\s]+\s/,'')+'</span>'
+    +'<span style="margin-left:auto;opacity:.8;font-size:12px">'+cls.age+'</span>';
+  g.appendChild(info);
+
+  cls.subjects.forEach(function(subj){
+    // Subject header
     var hdr=document.createElement('div');
-    hdr.style.cssText='font-family:Fredoka One,cursive;font-size:clamp(16px,5vw,20px);color:#fff;'
-      +'background:'+subj.color+';border-radius:14px;padding:10px 16px;'
-      +'box-shadow:0 4px 14px rgba(0,0,0,.15);margin-top:4px;display:flex;align-items:center;gap:8px;';
+    hdr.style.cssText='font-family:Fredoka One,cursive;font-size:clamp(14px,4.2vw,17px);color:#fff;'
+      +'background:'+subj.color+';border-radius:12px;padding:8px 14px;'
+      +'box-shadow:0 3px 10px rgba(0,0,0,.12);margin-top:4px;';
     hdr.textContent=subj.label;
     g.appendChild(hdr);
-    // Grid for this subject
+
     var grid=document.createElement('div');
     grid.className='cat-grid';
-    grid.style.marginBottom='6px';
+    grid.style.marginBottom='4px';
     subj.keys.forEach(function(k){
       var cat=DATA[k]; if(!cat) return;
       var d=document.createElement('div');
@@ -1853,7 +2281,7 @@ function buildUtterances(item, catKey) {
     var ml=item.spell.replace(/-/g,', ');
     p.push(u(ml+'.',false,0.68,P));
     p.push(u(item.name+'.',false,R2,P));
-  } else if(catKey==='body_parts'||catKey==='family'||catKey==='vehicles'||catKey==='birds'||catKey==='flowers'||catKey==='seasons'||catKey==='small_abc'||catKey==='two_letter_words'||catKey==='three_letter_words'||catKey==='my_school'||catKey==='community_helpers'||catKey==='our_food'||catKey==='water_cycle'||catKey==='solar_system'||catKey==='good_habits'||catKey==='living_nonliving'||catKey==='odd_even'||catKey==='national_symbols'){
+  } else if(catKey==='body_parts'||catKey==='family'||catKey==='vehicles'||catKey==='birds'||catKey==='flowers'||catKey==='seasons'||catKey==='small_abc'||catKey==='two_letter_words'||catKey==='three_letter_words'||catKey==='my_school'||catKey==='community_helpers'||catKey==='our_food'||catKey==='water_cycle'||catKey==='solar_system'||catKey==='good_habits'||catKey==='living_nonliving'||catKey==='odd_even'||catKey==='national_symbols'||catKey==='hindi_2letter'||catKey==='hindi_words_class1'||catKey==='sentences_class1'||catKey==='gk_class1'||catKey==='nouns_verbs'||catKey==='grammar_noun'||catKey==='grammar_verb'||catKey==='tenses_basic'||catKey==='plants'||catKey==='safety_rules'||catKey==='gk_india'||catKey==='festivals'||catKey==='human_body'||catKey==='weather'||catKey==='transport_comm'||catKey==='phonics'||catKey==='picture_words'||catKey==='vowel_words'||catKey==='sight_words'||catKey==='sentences_basic'||catKey==='counting_objects'||catKey==='big_small'||catKey==='before_after'||catKey==='money_basics'||catKey==='time_money'||catKey==='division_basic'||catKey==='paragraph_writing'||catKey==='reading_comp'||catKey==='hindi_matra_aa'||catKey==='hindi_matra_i'||catKey==='hindi_matra_all'||catKey==='hindi_sentences'||catKey==='hindi_essay'){
     p.push(u(item.name+'.',false,R,P));
     p.push(u(item.name+', matlab, '+(item.speak||item.name)+'.',false,R2,P));
   } else if(catKey==='simple_maths'){
