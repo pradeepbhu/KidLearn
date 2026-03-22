@@ -835,6 +835,63 @@ canvas.hw-canvas{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;heig
 <script>
 var TBL={1:'onja',2:'twoja',3:'threeja',4:'fourja',5:'fiveja',6:'sixja',7:'sevenja',8:'eightja',9:'nineja',10:'tenja'};
 
+var CLASSES=[
+  {
+    id:'nursery', label:'🌱 Nursery', age:'Age 3–4', color:'#FF6B9D',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['english_abc','phonics','rhymes','picture_words']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_rhymes']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','shapes','counting_objects','big_small']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['body_parts','family','fruits','vegetables','animals','birds','colors']},
+      {label:'🎨 Activity',  color:'#FF6B35', keys:['brain_sorting','brain_patterns']}
+    ]
+  },
+  {
+    id:'lkg', label:'🌼 LKG', age:'Lower KG', color:'#FF8C00',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['english_abc','small_abc','two_letter_words','vowel_words','rhymes']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_2letter']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','shapes','odd_even','before_after','simple_maths']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['seasons','vehicles','good_habits','plants','flowers']},
+      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing']}
+    ]
+  },
+  {
+    id:'ukg', label:'🌻 UKG', age:'Upper KG', color:'#2ED573',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['english_abc','small_abc','three_letter_words','sight_words','sentences_basic']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_aa','hindi_2letter']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','odd_even','tables','shapes']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['community_helpers','festivals','animals','water_cycle','good_habits']},
+      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
+    ]
+  },
+  {
+    id:'class1', label:'📚 Class 1', age:'Age 6–7', color:'#1E90FF',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['english_abc','three_letter_words','nouns_verbs','sentences_class1','rhymes','spelling']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_aa','hindi_matra_i','hindi_words_class1']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','spelling','tables','shapes','money_basics']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['my_school','our_food','plants','animals','safety_rules','body_parts']},
+      {label:'📖 GK',        color:'#FF6B35', keys:['national_symbols','days','months','gk_class1']},
+      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
+    ]
+  },
+  {
+    id:'class2', label:'📗 Class 2', age:'Age 7–8', color:'#A55EEA',
+    subjects:[
+      {label:'📘 English',   color:'#FF4757', keys:['grammar_noun','grammar_verb','tenses_basic','paragraph_writing','reading_comp']},
+      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_all','hindi_sentences','hindi_essay']},
+      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','tables','division_basic','time_money','shapes']},
+      {label:'🌍 EVS',       color:'#2ED573', keys:['human_body','weather','transport_comm','plants','living_nonliving','water_cycle']},
+      {label:'📖 GK',        color:'#FF6B35', keys:['national_symbols','gk_india','community_helpers','festivals']},
+      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
+    ]
+  }
+];
+
+var currentClass='nursery';
+
 var DATA={
 english_abc:{title:"A-B-C",icon:"&#128292;",color:"c1",hint:"26 Letters",type:"items",items:[
   {char:"A",emoji:"&#127822;",name:"Apple",hindi:"सेब",speak:"Seb"},{char:"B",emoji:"&#129731;",name:"Ball",hindi:"गेंद",speak:"Gend"},
@@ -1828,62 +1885,7 @@ function speakItem(item,catKey){
 // ══════════════════════════════════════════════════════════════════════
 // CLASS-WISE CURRICULUM  (Nursery → Class 2)
 // ══════════════════════════════════════════════════════════════════════
-var CLASSES=[
-  {
-    id:'nursery', label:'🌱 Nursery', age:'Age 3–4', color:'#FF6B9D',
-    subjects:[
-      {label:'📘 English',   color:'#FF4757', keys:['english_abc','phonics','rhymes','picture_words']},
-      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_rhymes']},
-      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','shapes','counting_objects','big_small']},
-      {label:'🌍 EVS',       color:'#2ED573', keys:['body_parts','family','fruits','vegetables','animals','birds','colors']},
-      {label:'🎨 Activity',  color:'#FF6B35', keys:['brain_sorting','brain_patterns']}
-    ]
-  },
-  {
-    id:'lkg', label:'🌼 LKG', age:'Lower KG', color:'#FF8C00',
-    subjects:[
-      {label:'📘 English',   color:'#FF4757', keys:['english_abc','small_abc','two_letter_words','vowel_words','rhymes']},
-      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_2letter']},
-      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','shapes','odd_even','before_after','simple_maths']},
-      {label:'🌍 EVS',       color:'#2ED573', keys:['seasons','vehicles','good_habits','plants','flowers']},
-      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing']}
-    ]
-  },
-  {
-    id:'ukg', label:'🌻 UKG', age:'Upper KG', color:'#2ED573',
-    subjects:[
-      {label:'📘 English',   color:'#FF4757', keys:['english_abc','small_abc','three_letter_words','sight_words','sentences_basic']},
-      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_aa','hindi_2letter']},
-      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','odd_even','tables','shapes']},
-      {label:'🌍 EVS',       color:'#2ED573', keys:['community_helpers','festivals','animals','water_cycle','good_habits']},
-      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
-    ]
-  },
-  {
-    id:'class1', label:'📚 Class 1', age:'Age 6–7', color:'#1E90FF',
-    subjects:[
-      {label:'📘 English',   color:'#FF4757', keys:['english_abc','three_letter_words','nouns_verbs','sentences_class1','rhymes','spelling']},
-      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_aa','hindi_matra_i','hindi_words_class1']},
-      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','spelling','tables','shapes','money_basics']},
-      {label:'🌍 EVS',       color:'#2ED573', keys:['my_school','our_food','plants','animals','safety_rules','body_parts']},
-      {label:'📖 GK',        color:'#FF6B35', keys:['national_symbols','days','months','gk_class1']},
-      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
-    ]
-  },
-  {
-    id:'class2', label:'📗 Class 2', age:'Age 7–8', color:'#A55EEA',
-    subjects:[
-      {label:'📘 English',   color:'#FF4757', keys:['grammar_noun','grammar_verb','tenses_basic','paragraph_writing','reading_comp']},
-      {label:'📗 Hindi',     color:'#A55EEA', keys:['hindi_swar','hindi_vyanjan','hindi_matra_all','hindi_sentences','hindi_essay']},
-      {label:'🔢 Maths',    color:'#1E90FF', keys:['numbers','simple_maths','tables','division_basic','time_money','shapes']},
-      {label:'🌍 EVS',       color:'#2ED573', keys:['human_body','weather','transport_comm','plants','living_nonliving','water_cycle']},
-      {label:'📖 GK',        color:'#FF6B35', keys:['national_symbols','gk_india','community_helpers','festivals']},
-      {label:'🧠 Think',     color:'#9B59B6', keys:['brain_sorting','brain_patterns','brain_whatsmissing','opposites']}
-    ]
-  }
-];
-
-var currentClass='nursery';
+// CLASSES moved to top of script
 
 function buildCats(){
   var tabRow=document.getElementById('classTabsRow');
@@ -1891,6 +1893,11 @@ function buildCats(){
   var dbg=document.getElementById('debugMsg');
   try{
     if(!tabRow||!g){ if(dbg){dbg.style.display='block';dbg.textContent='ERROR: tabRow or catGrid not found';}return; }
+    // Guard: CLASSES must be defined and be an array
+    if(typeof CLASSES==='undefined'||!CLASSES||!CLASSES.length){
+      if(dbg){dbg.style.display='block';dbg.textContent='ERROR: CLASSES not defined yet, retrying...';}
+      setTimeout(buildCats,200); return;
+    }
     tabRow.innerHTML='';
     g.innerHTML='';
 
@@ -4657,16 +4664,45 @@ function _doInit(){
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded', _doInit);
 } else {
-  _doInit(); // DOM already ready — run now
+  _doInit();
 }
 window.addEventListener('load', _doInit);
-// Hard fallback timers — Android WebView sometimes fires no events
-setTimeout(_doInit, 100);
-setTimeout(_doInit, 500);
-setTimeout(_doInit, 1500);
 
-// Also expose as global so React Native injectedJavaScript can call it
+// Smart polling — waits until CLASSES, DATA, and DOM are ALL ready
+// This is the most reliable approach for Android WebView
+(function(){
+  var pollCount=0;
+  var pollMax=50; // 50 * 100ms = 5 seconds max
+  function poll(){
+    pollCount++;
+    // Check everything is defined
+    var ready = (
+      typeof CLASSES !== 'undefined' && CLASSES && CLASSES.length > 0 &&
+      typeof DATA !== 'undefined' && DATA &&
+      document.getElementById('classTabsRow') !== null &&
+      document.getElementById('catGrid') !== null
+    );
+    if(ready){
+      _doInit();
+      // Also force buildCats in case _doInit already ran but CLASSES wasn't ready
+      if(window._appInited && !window._buildCatsDone){
+        try{ buildCats(); window._buildCatsDone=true; }catch(e){}
+      }
+      // If buildCats ran but catGrid is still empty, retry
+      var g=document.getElementById('catGrid');
+      if(g && g.children.length===0){
+        try{ buildCats(); }catch(e){}
+      }
+    } else if(pollCount < pollMax){
+      setTimeout(poll, 100);
+    }
+  }
+  setTimeout(poll, 50);
+})();
+
+// Expose as global for React Native injectedJavaScript
 window.initApp = _doInit;
+window.retryBuildCats = function(){ try{ buildCats(); }catch(e){ console.warn(e); } };
 </script>
 </body>
 </html>
