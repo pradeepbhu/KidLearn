@@ -4,8 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>⭐ KidLearn Magic!</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" onerror="this.remove()">
 <style>
+/* System font fallback if Google Fonts fail (WebView offline) */
+@font-face {
+  font-family: 'Fredoka One';
+  src: local('Roboto Bold'), local('Arial Rounded MT Bold'), local('Arial Bold');
+  font-weight: normal;
+}
+
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --red:#FF4757;--teal:#2ED573;--yellow:#FFD32A;--orange:#FF6B35;
@@ -76,7 +83,8 @@ body::before{
 @keyframes bounce-dot{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
 /* ── APP ── */
-#app{display:flex;flex-direction:column;min-height:100vh;position:relative;z-index:1;visibility:hidden;}
+#app{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;position:relative;z-index:1;}
+#app.show{visibility:visible;} /* kept for compat */
 #app.show{visibility:visible;}
 
 /* ── TOPBAR ── */
@@ -1686,7 +1694,7 @@ var vEn=null,vHi=null;
 var voiceReady=false;
 
 function loadVoices(){
-  var vs=speechSynthesis.getVoices();
+  var vs; try{vs=speechSynthesis.getVoices();}catch(e){return;} 
   if(!vs||!vs.length)return;
   voiceReady=true;
 
@@ -1750,7 +1758,7 @@ function u(t,hi,r,p){
 function gap(){ var x=new SpeechSynthesisUtterance(','); x.rate=10; x.volume=0; return x; }
 function sil(){ var x=new SpeechSynthesisUtterance(' '); x.rate=10; x.volume=0; return x; }
 
-function sq(a){ speechSynthesis.cancel(); a.forEach(function(x){ speechSynthesis.speak(x); }); }
+function sq(a){ try{ if(!window.speechSynthesis)return; speechSynthesis.cancel(); a.forEach(function(x){ speechSynthesis.speak(x); }); }catch(e){} }
 
 function speakItem(item,catKey){
   if(!window.speechSynthesis)return;
@@ -1808,49 +1816,69 @@ function speakItem(item,catKey){
 function initApp(){
   if(window._appInited) return;
   window._appInited=true;
-  if(window.speechSynthesis){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
-  buildCats();
-  // Show app immediately, fade splash
+
+  // Safe speech synthesis — WebView may not have it
+  try{
+    if(window.speechSynthesis){
+      loadVoices();
+      speechSynthesis.onvoiceschanged=loadVoices;
+    }
+  }catch(e){}
+
+  // Build UI
+  try{ buildCats(); }catch(e){ console.warn('buildCats err',e); }
+
+  // Show app — remove splash
   var splash=document.getElementById('splash');
   var app=document.getElementById('app');
-  app.classList.add('show');
-  setTimeout(function(){
-    if(splash){ splash.classList.add('fade'); }
-    setTimeout(function(){ if(splash) splash.classList.add('gone'); }, 600);
-  }, 1200);
+  if(app){ app.classList.add('show'); app.style.visibility='visible'; }
+  if(splash){
+    splash.style.transition='opacity 0.4s ease';
+    splash.style.opacity='0';
+    splash.style.pointerEvents='none';
+    setTimeout(function(){ if(splash) splash.style.display='none'; }, 450);
+  }
 
-  document.getElementById('learnBack').addEventListener('click',goHome);
-  document.getElementById('quizBack').addEventListener('click',goHome);
-  document.getElementById('tablesBack').addEventListener('click',goHome);
-  document.getElementById('navHome').addEventListener('click',goHome);
-  document.getElementById('navLearn').addEventListener('click',function(){
+  // Wire events safely
+  function on(id, ev, fn){ var el=document.getElementById(id); if(el) el.addEventListener(ev,fn); }
+  on('learnBack','click',goHome);
+  on('quizBack','click',goHome);
+  on('tablesBack','click',goHome);
+  on('navHome','click',goHome);
+  on('navLearn','click',function(){
     if(currentCat){showScreen('learnScreen');setNav('navLearn');}
-    else{ showScreen('homeScreen');setNav('navLearn'); }
+    else{showScreen('homeScreen');setNav('navLearn');}
   });
-  document.getElementById('navQuiz').addEventListener('click',startQuiz);
-  document.getElementById('navGames').addEventListener('click',openGamesMenu);
-  document.getElementById('navWork').addEventListener('click',openWorksheetMenu);
-  document.getElementById('gamesBack').addEventListener('click',function(){
-    speechSynthesis.cancel();
+  on('navQuiz','click',startQuiz);
+  on('navGames','click',openGamesMenu);
+  on('navWork','click',openWorksheetMenu);
+  on('gamesBack','click',function(){
+    try{speechSynthesis.cancel();}catch(e){}
     document.getElementById('gamesOverlay').style.display='none';
     setNav('navHome');
   });
-  document.getElementById('wsBack').addEventListener('click',function(){
-    speechSynthesis.cancel();
+  on('wsBack','click',function(){
+    try{speechSynthesis.cancel();}catch(e){}
     document.getElementById('worksheetOverlay').style.display='none';
     setNav('navHome');
   });
-  document.getElementById('closeBtn').addEventListener('click',closeOverlay);
-  document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)closeOverlay();});
-  document.getElementById('speakBtn').addEventListener('click',function(){if(currentDetail)speakItem(currentDetail.item,currentDetail.catKey);});
+  on('closeBtn','click',closeOverlay);
+  on('speakBtn','click',function(){if(currentDetail)speakItem(currentDetail.item,currentDetail.catKey);});
+  var ov=document.getElementById('overlay');
+  if(ov) ov.addEventListener('click',function(e){if(e.target===this)closeOverlay();});
 }
-// Try DOMContentLoaded first (faster), fallback to load, fallback to immediate
-if(document.readyState==='loading'){
+
+// ── FORCE INIT — multiple triggers for WebView compatibility ────────────
+(function(){
+  // Immediate if DOM ready
+  if(document.readyState!=='loading'){ initApp(); return; }
+  // DOMContentLoaded
   document.addEventListener('DOMContentLoaded', initApp);
-} else {
-  initApp();
-}
-window.addEventListener('load', initApp); // extra safety for WebView
+})();
+// Fallback timers — in case events don't fire (common in Android WebView)
+setTimeout(initApp, 300);
+setTimeout(initApp, 800);
+window.addEventListener('load', initApp);
 
 // ══════════════════════════════════════════════════════════════════════
 // CLASS-WISE CURRICULUM  (Nursery → Class 2)
@@ -2158,14 +2186,14 @@ function buildOpposites(k){
   hearBtn.addEventListener('click',function(){
     stopBtn.classList.add('active');hearBtn.style.opacity='0.5';hearBtn.style.pointerEvents='none';
     _playToken++;
-    var myToken=_playToken; speechSynthesis.cancel();
+    var myToken=_playToken; try{speechSynthesis.cancel();}catch(e){}
     var i=0;
     function next(){
       if(myToken!==_playToken||i>=cat.items.length){stopBtn.classList.remove('active');hearBtn.style.opacity='';hearBtn.style.pointerEvents='';return;}
       var it=cat.items[i++];
       var ut=u(it.name+', opposite is, '+it.opp+'.',false,R,P);
       ut.onend=function(){if(myToken===_playToken)setTimeout(next,300);};
-      speechSynthesis.cancel(); speechSynthesis.speak(ut);
+      try{speechSynthesis.cancel();speechSynthesis.speak(ut);}catch(e){}
     }
     next();
   });
@@ -2221,7 +2249,7 @@ function speakAllItems(items, catKey, cardSelector, onDone) {
   if (!window.speechSynthesis) { if(onDone) onDone(); return; }
   _playToken++;                       // invalidate previous session
   var myToken = _playToken;
-  speechSynthesis.cancel();
+  try{speechSynthesis.cancel();}catch(e){}
   var idx = 0;
 
   function clearHighlight() {
@@ -2260,7 +2288,7 @@ function speakAllItems(items, catKey, cardSelector, onDone) {
 
 function stopAll(hearBtn, stopBtn) {
   _playToken++;                        // invalidate running session
-  speechSynthesis.cancel();
+  try{speechSynthesis.cancel();}catch(e){}
   document.querySelectorAll('.speaking').forEach(function(el){ el.classList.remove('speaking'); });
   if(hearBtn){ hearBtn.style.opacity=''; hearBtn.style.pointerEvents=''; }
   if(stopBtn){ stopBtn.classList.remove('active'); }
@@ -2324,7 +2352,7 @@ function openDetail(item,catKey,idx){
   var cs=document.querySelectorAll('#learnBody .icard');if(cs[idx])cs[idx].classList.add('done');
 }
 
-function closeOverlay(){document.getElementById('overlay').classList.remove('open');speechSynthesis.cancel();}
+function closeOverlay(){document.getElementById('overlay').classList.remove('open');try{speechSynthesis.cancel();}catch(e){}}
 
 function updateProg(k){
   var cat=DATA[k];if(!cat||!cat.items)return;
@@ -2369,7 +2397,7 @@ function buildTableView(n){
     tstop.style.opacity='1';tstop.style.pointerEvents='auto';tstop.style.background='linear-gradient(135deg,#E17055,#D63031)';
     _playToken++;
     var myToken=_playToken;
-    speechSynthesis.cancel();
+    try{speechSynthesis.cancel();}catch(e){}
     var rows=area.querySelectorAll('.table-row');
     function clearHL(){rows.forEach(function(r){r.classList.remove('speaking');});}
     var i=0;
@@ -2390,7 +2418,7 @@ function buildTableView(n){
   });
   area.querySelector('#tstop').addEventListener('click',function(){
     _playToken++;
-    speechSynthesis.cancel();
+    try{speechSynthesis.cancel();}catch(e){}
     area.querySelectorAll('.table-row').forEach(function(r){r.classList.remove('speaking');});
     var sab=area.querySelector('#sab'),tstop=area.querySelector('#tstop');
     sab.style.opacity='';sab.style.pointerEvents='';
