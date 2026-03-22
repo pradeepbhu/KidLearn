@@ -46,13 +46,20 @@ body::before{
 
 /* ── SPLASH ── */
 #splash{
-  position:fixed;inset:0;z-index:9999;
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;
   background:linear-gradient(135deg,#FF4757 0%,#FF6B35 30%,#FFD32A 60%,#2ED573 100%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:opacity .6s ease;overflow:hidden;
+  display:-webkit-flex;display:flex;
+  -webkit-flex-direction:column;flex-direction:column;
+  -webkit-align-items:center;align-items:center;
+  -webkit-justify-content:center;justify-content:center;
+  overflow:hidden;
+  -webkit-animation:splashHide 0.6s ease 2s forwards;
+  animation:splashHide 0.6s ease 2s forwards;
 }
-#splash.fade{opacity:0;pointer-events:none;transition:opacity .5s ease;}
-#splash.gone{display:none;}
+@-webkit-keyframes splashHide{from{opacity:1;}to{opacity:0;pointer-events:none;visibility:hidden;}}
+@keyframes splashHide{from{opacity:1;}to{opacity:0;pointer-events:none;visibility:hidden;}}
+#splash.gone{display:none!important;-webkit-animation:none;animation:none;}
+#splash.fade{opacity:0;pointer-events:none;-webkit-animation:none;animation:none;}
 .splash-stars{position:absolute;font-size:36px;animation:spin 8s linear infinite;opacity:.3;}
 .splash-stars:nth-child(2){top:10%;left:10%;animation-duration:6s;}
 .splash-stars:nth-child(3){top:15%;right:15%;animation-duration:10s;animation-direction:reverse;}
@@ -83,7 +90,7 @@ body::before{
 @keyframes bounce-dot{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 
 /* ── APP ── */
-#app{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;position:relative;z-index:1;}
+#app{display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
 #app.show{visibility:visible;} /* kept for compat */
 #app.show{visibility:visible;}
 
@@ -108,8 +115,8 @@ body::before{
 .score-box.pop .star-icon{animation:starPop .4s ease;}
 
 /* ── SCREENS ── */
-.screen.active{display:flex;}
-.screen.active{display:flex;}
+.screen.active{display:-webkit-flex;display:flex;}
+.screen.active{display:-webkit-flex;display:flex;}
 
 /* ── HOME BANNER ── */
 .banner{
@@ -168,7 +175,7 @@ body::before{
   user-select:none;position:relative;overflow:hidden;
 }
 .cat::before{
-  content:'';position:absolute;inset:0;
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
   background:linear-gradient(135deg,rgba(255,255,255,.4),transparent);
   border-radius:17px;
 }
@@ -336,7 +343,7 @@ body::before{
 }
 
 /* ── OVERLAY / SHEET ── */
-.overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);}
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);}
 .overlay.open{display:flex;}
 .sheet{
   background:linear-gradient(180deg,#fff 0%,#FFF8F0 100%);
@@ -507,7 +514,7 @@ body::before{
   transform:scale(1.04) translateY(-2px);
 }
 .nb.active .ni{transform:scale(1.1);}
-.screen{padding:14px 12px calc(90px + env(safe-area-inset-bottom,0px));display:none;flex-direction:column;gap:12px;min-height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.screen{padding:14px 12px 90px;display:none;-webkit-flex-direction:column;flex-direction:column;gap:12px;min-height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
 /* ── GAMES ── */
 .game-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -704,7 +711,7 @@ canvas.trace-canvas{border-radius:12px;cursor:crosshair;touch-action:none;
 .hw-lines::before{top:0;background:#FFD32A;}
 .hw-mid-line{position:absolute;top:50%;left:0;right:0;height:1px;background:#ccc;}
 .hw-lines::after{bottom:0;background:#FFD32A;}
-canvas.hw-canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;touch-action:none;}
+canvas.hw-canvas{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;cursor:crosshair;touch-action:none;}
 </style>
 </head>
 <body>
@@ -789,7 +796,7 @@ canvas.hw-canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crossha
 </div>
 
 <!-- WORKSHEET OVERLAY -->
-<div id="worksheetOverlay" style="display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;">
+<div id="worksheetOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg);overflow-y:auto;">
   <div style="padding:14px 14px 90px;display:flex;flex-direction:column;gap:14px;">
     <div class="lhdr">
       <button class="back" id="wsBack">←</button>
@@ -800,7 +807,7 @@ canvas.hw-canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crossha
 </div>
 
 <!-- GAMES OVERLAY (full screen) -->
-<div id="gamesOverlay" style="display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;">
+<div id="gamesOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg);overflow-y:auto;">
   <div style="padding:14px 14px 90px;display:flex;flex-direction:column;gap:14px;">
     <div class="lhdr">
       <button class="back" id="gamesBack">←</button>
@@ -1814,73 +1821,7 @@ function speakItem(item,catKey){
   sq(p);
 }
 
-// ── INIT ───────────────────────────────────────────────────────────────
-function initApp(){
-  if(window._appInited) return;
-  window._appInited=true;
-
-  // Safe speech synthesis — WebView may not have it
-  try{
-    if(window.speechSynthesis){
-      loadVoices();
-      speechSynthesis.onvoiceschanged=loadVoices;
-    }
-  }catch(e){}
-
-  // Build UI
-  try{ buildCats(); }catch(e){ console.warn('buildCats err',e); }
-
-  // Show app — remove splash
-  var splash=document.getElementById('splash');
-  var app=document.getElementById('app');
-  if(app){ app.classList.add('show'); app.style.visibility='visible'; }
-  if(splash){
-    splash.style.transition='opacity 0.4s ease';
-    splash.style.opacity='0';
-    splash.style.pointerEvents='none';
-    setTimeout(function(){ if(splash) splash.style.display='none'; }, 450);
-  }
-
-  // Wire events safely
-  function on(id, ev, fn){ var el=document.getElementById(id); if(el) el.addEventListener(ev,fn); }
-  on('learnBack','click',goHome);
-  on('quizBack','click',goHome);
-  on('tablesBack','click',goHome);
-  on('navHome','click',goHome);
-  on('navLearn','click',function(){
-    if(currentCat){showScreen('learnScreen');setNav('navLearn');}
-    else{showScreen('homeScreen');setNav('navLearn');}
-  });
-  on('navQuiz','click',startQuiz);
-  on('navGames','click',openGamesMenu);
-  on('navWork','click',openWorksheetMenu);
-  on('gamesBack','click',function(){
-    try{speechSynthesis.cancel();}catch(e){}
-    document.getElementById('gamesOverlay').style.display='none';
-    setNav('navHome');
-  });
-  on('wsBack','click',function(){
-    try{speechSynthesis.cancel();}catch(e){}
-    document.getElementById('worksheetOverlay').style.display='none';
-    setNav('navHome');
-  });
-  on('closeBtn','click',closeOverlay);
-  on('speakBtn','click',function(){if(currentDetail)speakItem(currentDetail.item,currentDetail.catKey);});
-  var ov=document.getElementById('overlay');
-  if(ov) ov.addEventListener('click',function(e){if(e.target===this)closeOverlay();});
-}
-
-// ── FORCE INIT — multiple triggers for WebView compatibility ────────────
-(function(){
-  // Immediate if DOM ready
-  if(document.readyState!=='loading'){ initApp(); return; }
-  // DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', initApp);
-})();
-// Fallback timers — in case events don't fire (common in Android WebView)
-setTimeout(initApp, 300);
-setTimeout(initApp, 800);
-window.addEventListener('load', initApp);
+// ── Init moved to _doInit at end of script ──────────────────────────
 
 // ══════════════════════════════════════════════════════════════════════
 // CLASS-WISE CURRICULUM  (Nursery → Class 2)
@@ -4572,6 +4513,87 @@ function showConfetti(){
   }
 }
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+// ══════════════════════════════════════════════════════════════════════
+// ALL VARIABLES + FUNCTIONS NOW DEFINED — SAFE TO INIT
+// ══════════════════════════════════════════════════════════════════════
+
+// Global error handler — show app even if something crashes
+window.onerror=function(msg,src,line,col,err){
+  console.warn('KidLearn JS Error:',msg,'line:',line);
+  // Force show app if error occurs
+  try{
+    var s=document.getElementById('splash');
+    var a=document.getElementById('app');
+    if(s){s.style.opacity='0';s.style.display='none';}
+    if(a){a.style.visibility='visible';}
+    if(!window._buildCatsDone){ buildCats(); window._buildCatsDone=true; }
+  }catch(e2){}
+  return false; // don't suppress error from console
+};
+
+// Main init — runs after ALL code is parsed
+function _doInit(){
+  if(window._appInited) return;
+  window._appInited=true;
+  try{ if(window.speechSynthesis){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;} }catch(e){}
+  try{ buildCats(); window._buildCatsDone=true; }catch(e){ console.warn('buildCats:',e); }
+
+  // Hide splash immediately
+  var splash=document.getElementById('splash');
+  var app=document.getElementById('app');
+  if(app){ app.style.visibility='visible'; }
+  if(splash){
+    splash.style.webkitAnimation='none';
+    splash.style.animation='none';
+    splash.style.opacity='0';
+    splash.style.pointerEvents='none';
+    setTimeout(function(){ if(splash){splash.style.display='none';} }, 400);
+  }
+
+  // Wire all events
+  function on(id,ev,fn){ var el=document.getElementById(id); if(el) el.addEventListener(ev,fn); }
+  on('learnBack','click',goHome);
+  on('quizBack','click',goHome);
+  on('tablesBack','click',goHome);
+  on('navHome','click',goHome);
+  on('navLearn','click',function(){
+    if(currentCat){showScreen('learnScreen');setNav('navLearn');}
+    else{showScreen('homeScreen');setNav('navLearn');}
+  });
+  on('navQuiz','click',startQuiz);
+  on('navGames','click',openGamesMenu);
+  on('navWork','click',openWorksheetMenu);
+  on('gamesBack','click',function(){
+    try{speechSynthesis.cancel();}catch(e){}
+    document.getElementById('gamesOverlay').style.display='none';
+    setNav('navHome');
+  });
+  on('wsBack','click',function(){
+    try{speechSynthesis.cancel();}catch(e){}
+    document.getElementById('worksheetOverlay').style.display='none';
+    setNav('navHome');
+  });
+  on('closeBtn','click',closeOverlay);
+  on('speakBtn','click',function(){if(currentDetail)try{speakItem(currentDetail.item,currentDetail.catKey);}catch(e){}});
+  var ov=document.getElementById('overlay');
+  if(ov) ov.addEventListener('click',function(e){if(e.target===this)closeOverlay();});
+}
+
+// Multiple trigger strategies for Android WebView reliability
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', _doInit);
+} else {
+  _doInit(); // DOM already ready — run now
+}
+window.addEventListener('load', _doInit);
+// Hard fallback timers — Android WebView sometimes fires no events
+setTimeout(_doInit, 100);
+setTimeout(_doInit, 500);
+setTimeout(_doInit, 1500);
+
+// Also expose as global so React Native injectedJavaScript can call it
+window.initApp = _doInit;
 </script>
 </body>
 </html>
